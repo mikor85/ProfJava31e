@@ -26,7 +26,8 @@ public class BankAccount {
 
     // Methods
     public int credit(int amount) {
-        return balance + amount;
+        balance += amount;
+        return balance;
     }
 
     public int debit(int amount) {
