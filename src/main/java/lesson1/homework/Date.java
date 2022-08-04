@@ -73,7 +73,7 @@ public class Date {
         return false;
     }
 
-
+    // Version 1
     public void addDay() {
         if (day == 31 && (month == 1 || month == 3 || month == 5 ||
                 month == 7 || month == 8 || month == 10 || month == 12)) {
@@ -99,10 +99,33 @@ public class Date {
         }
     }
 
+    // Version 2
+    public void addDayVer2() {
+        Date d1 = new Date(year, month, day + 1);
+        if (!d1.checkDate()) {
+            day = 1;
+            if (month == 12) {
+                year++;
+                month = 1;
+            } else
+                month++;
+        } else
+            day++;
+
+    }
+
     public static void main(String[] args) {
         Date d1 = new Date(2020, 2, 28);
         System.out.println(d1);
         d1.addDay();
         System.out.println(d1);
+
+        Date newYear = new Date(2022, 12, 31);
+        newYear.addDayVer2();
+        System.out.println(newYear);
+
+        Date testDate = new Date(2022, 7, 4);
+        testDate.addDayVer2();
+        System.out.println(testDate);
     }
 }
