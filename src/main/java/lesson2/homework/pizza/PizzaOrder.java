@@ -1,9 +1,9 @@
-package lesson2.Pizza;
+package lesson2.homework.pizza;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pizza {
+public class PizzaOrder {
     public static void main(String[] args) {
         List<Pizza> pizzas = new ArrayList<>();
     }
