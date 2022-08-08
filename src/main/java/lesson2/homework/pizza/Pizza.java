@@ -68,7 +68,7 @@ public class Pizza {
                 "Cheese: " + cheese + " pcs." + '\n' +
                 "Pepperoni: " + pepperoni + " pcs." + '\n' +
                 "Ham: " + ham + " pcs." + '\n' +
-                "Price: " + price + " EUR";
+                "Price: " + price + "EUR";
     }
 
     public boolean checkSize() {
