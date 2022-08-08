@@ -5,7 +5,7 @@ package lesson2.homework.author;
 // Создайте класс Book с полями title, author: Author и price.
 // Напишите конструктор, геттеры, сеттеры и toString
 
-public class App {
+public class AppAuthor {
     public static void main(String[] args) {
         Author a1 = new Author("Ivan", "Ivanov");
         Author a2 = new Author("Petr", "Petrov");
