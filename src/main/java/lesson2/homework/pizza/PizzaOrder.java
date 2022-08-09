@@ -5,7 +5,6 @@ import java.util.List;
 
 public class PizzaOrder {
     private List<Pizza> pizzas = new ArrayList();
-    private int size = 0;
 
     @Override
     public String toString() {
@@ -16,20 +15,15 @@ public class PizzaOrder {
 
     public void add(Pizza pizza) {
         pizzas.add(pizza);
-        size++;
     }
 
     public Pizza get(int i) {
         return pizzas.get(i);
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public int calcTotalPrice() {
         int sum = 0;
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < pizzas.size(); i++) {
             sum += get(i).getPrice();
         }
         return sum;
@@ -37,7 +31,7 @@ public class PizzaOrder {
 
     public void printOrderList() {
         System.out.println("Order list:");
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < pizzas.size(); i++) {
             System.out.println("---------------");
             System.out.print(i + 1 + ".:");
             System.out.println(pizzas.get(i));
