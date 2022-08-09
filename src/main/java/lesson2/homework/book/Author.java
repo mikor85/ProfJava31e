@@ -1,4 +1,4 @@
-package lesson2.homework.author;
+package lesson2.homework.book;
 
 public class Author {
     private String firstName;
@@ -27,6 +27,6 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author: " + firstName + " " + lastName;
+        return String.format("Author %s %s: ", firstName,  lastName);
     }
 }

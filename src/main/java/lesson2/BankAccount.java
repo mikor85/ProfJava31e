@@ -1,4 +1,4 @@
-package lesson2.account;
+package lesson2;
 
 public class BankAccount {
     private String id, name;

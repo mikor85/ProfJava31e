@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PizzaOrder {
-    private List<Pizza> pizzas = new ArrayList();
+    private List<Pizza> pizzas = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -24,7 +24,7 @@ public class PizzaOrder {
     public int calcTotalPrice() {
         int sum = 0;
         for (int i = 0; i < pizzas.size(); i++) {
-            sum += get(i).getPrice();
+            sum += get(i).calcPrice();
         }
         return sum;
     }

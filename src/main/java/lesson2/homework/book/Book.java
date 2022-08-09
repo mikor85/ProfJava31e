@@ -1,9 +1,9 @@
-package lesson2.homework.author;
+package lesson2.homework.book;
 
 public class Book {
     private String title;
     private Author author;
-    private int price;
+    private double price;
 
     public Book(String title, Author author, int price) {
         this.title = title;
@@ -27,7 +27,7 @@ public class Book {
         this.author = author;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

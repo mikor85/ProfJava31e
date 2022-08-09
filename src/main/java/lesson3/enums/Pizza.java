@@ -1,25 +1,25 @@
-package lesson2.homework.pizza;
+package lesson3.enums;
 
 public class Pizza {
-    private String size;
+//    private String size;
+    private PizzaSize size;
     private int cheese, pepperoni, ham;
 
-    public Pizza(String size, int cheese, int pepperoni, int ham) {
+    //public Pizza(String size, int cheese, int pepperoni, int ham) {
+    public Pizza(PizzaSize size, int cheese, int pepperoni, int ham) {
         this.size = size;
         this.cheese = cheese;
         this.pepperoni = pepperoni;
         this.ham = ham;
-        if (!checkSize()) {
-            System.out.println("Размер пиццы указан неверно");
-        }
     }
 
-    public String getSize() {
+
+    public PizzaSize getSize() {
         return size;
     }
 
     public void setSize(String size) {
-        this.size = size;
+        this.size = PizzaSize.valueOf(size);
     }
 
     public int getCheese() {
@@ -63,9 +63,9 @@ public class Pizza {
     public int calcPrice() {
         int price = 0;
         switch (size) {
-            case "small" -> price += 10 + (cheese + pepperoni + ham) * 2;
-            case "medium" -> price += 12 + (cheese + pepperoni + ham) * 2;
-            case "large" -> price += 14 + (cheese + pepperoni + ham) * 2;
+            case SMALL -> price += 10 + (cheese + pepperoni + ham) * 2;
+            case MEDIUM -> price += 12 + (cheese + pepperoni + ham) * 2;
+            case LARGE -> price += 14 + (cheese + pepperoni + ham) * 2;
         }
         return price;
     }

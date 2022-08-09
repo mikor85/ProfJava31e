@@ -1,5 +1,6 @@
 package lesson2.account;
 
+import lesson2.BankAccount;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

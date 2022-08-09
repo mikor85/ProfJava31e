@@ -1,4 +1,4 @@
-package lesson2.homework.author;
+package lesson2.homework.book;
 
 // Создайте класс Author  с полями firstName и lastName,
 // добавьте конструктор, геттеры, сеттеры и toString.
