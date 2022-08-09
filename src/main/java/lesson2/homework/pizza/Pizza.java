@@ -1,14 +1,5 @@
 package lesson2.homework.pizza;
 
-// Создайте класc Pizza, поля size типа String (с возможными значениями "small", "medium", "large"),
-// cheese:int, pepperoni:int,ham:int=0.
-// Добавьте конструктор вида Pizza(String size, int cheese, int pepperoni, int ham), геттеры,сеттеры и toString.
-// Добавьте метод calcPrice(): int - маленькая 10, средняя 12, большая 14 и каждый топпинг по 2.
-// Создайте класс PizzaOrder куда можно будет добавлять пиццу  методом add(Pizza) и
-// напишите метод calcTotalPrice(): int который вычислит всю сумму заказа для всех пиц.
-
-import java.util.InputMismatchException;
-
 public class Pizza {
     private String size;
     private int cheese, pepperoni, ham;
