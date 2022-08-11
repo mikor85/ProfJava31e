@@ -15,6 +15,8 @@ public class AppEnum {
         Weekday wd1 = MONDAY;
         System.out.println(wd1.isWeekEnd());
 
+        System.out.println(wd1.getWeekdayValue());
+
     }
 
 }
