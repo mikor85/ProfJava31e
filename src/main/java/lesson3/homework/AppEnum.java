@@ -11,8 +11,10 @@ package lesson3.homework;
 import static lesson3.homework.Weekday.MONDAY;
 
 public class AppEnum {
+    public static void main(String[] args) {
+        Weekday wd1 = MONDAY;
+        System.out.println(wd1.isWeekEnd());
 
-    Day d1 = new Day(MONDAY);
-    d1.isWeekDay();
+    }
 
 }

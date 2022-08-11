@@ -5,4 +5,11 @@ public enum Cru {
 
     int quality;
 
+    Cru(int quality) {
+        this.quality = quality;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
 }
