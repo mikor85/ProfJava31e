@@ -30,7 +30,8 @@ public class AppFiguresTester {
         System.out.println("----------");
 
         PolyLine pl1 = new PolyLine(points);
-        pl1.appendPoint(new Point(3, 1));
+        pl1.appendPoint(new Point(1, -1));
+        pl1.appendPoint(new Point(0, 0));
         System.out.println("PolyLine length: " + pl1.getLength());
         System.out.println("----------");
         System.out.println(pl1);
