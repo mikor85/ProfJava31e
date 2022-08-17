@@ -10,18 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class RectangleTest {
     @Test
     public void testRectangle() {
-        Point p0 = new Point(1, 1);
-        Point p1 = new Point(2, 2);
-        Point p2 = new Point(3, 1);
-        Point p3 = new Point(2, 0);
 
         List<Point> points = new ArrayList<>();
-        points.add(p0);
-        points.add(p1);
-        points.add(p2);
-        points.add(p3);
+        points.add(new Point(0, 0));
+        points.add(new Point(1, 0));
+        points.add(new Point(1, 1));
+        points.add(new Point(0, 1));
 
-        Rectangle r1 = new Rectangle(points);
-        assertEquals(5.6569, r1.getLength(), 0.0001);
+        Rectangle r = new Rectangle(points);
+        assertEquals(4, r.getLength(), 0.0001);
     }
 }

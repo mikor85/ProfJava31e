@@ -9,22 +9,43 @@ public class PolyLine implements Figure {
         this.points = points;
     }
 
-    public void appendPoint(Point p) {
+//    public void appendPoint(Point p) {
+//        points.add(p);
+//    }
+
+    public PolyLine appendPoint(Point p)
+    {
         points.add(p);
+        return this;
     }
 
+
+//    @Override
+//    public String toString() {
+//        String s = "PolyLine points: " + '\n';
+//        for (int i = 0; i < points.size(); i++) {
+//            if (i < points.size() - 1) {
+//                s += "point " + (i + 1) + ": " + points.get(i) + ";" + '\n';
+//            } else {
+//                s += "point " + (i + 1) + ": " + points.get(i) + ".";
+//            }
+//        }
+//        return s;
+//    }
+
     @Override
-    public String toString() {
-        String s = "PolyLine points: " + '\n';
+    public String toString()
+    {
+        StringBuilder b = new StringBuilder();
+        b.append("Polyline {");
         for (int i = 0; i < points.size(); i++) {
-            if (i < points.size() - 1) {
-                s += "point " + (i + 1) + ": " + points.get(i) + ";" + '\n';
-            } else {
-                s += "point " + (i + 1) + ": " + points.get(i) + ".";
-            }
+            b.append("\t");
+            b.append(points.get(i));
         }
-        return s;
+        b.append("}");
+        return b.toString();
     }
+
 
     private double getLength(Point p0, Point p1) {
         return Math.sqrt(
@@ -35,12 +56,8 @@ public class PolyLine implements Figure {
     @Override
     public double getLength() {
         double length = 0;
-        for (int i = 0; i < points.size(); i++) {
-            if (i < points.size() - 1) {
-                length += getLength(points.get(i), points.get(i + 1));
-            } else {
-                length += getLength(points.get(i), points.get(0));
-            }
+        for (int i = 0; i < points.size() - 1; i++) {
+            length += points.get(i).getLength(points.get(i + 1));
         }
         return length;
     }

@@ -29,12 +29,11 @@ public class AppFiguresTester {
         System.out.println(r1);
         System.out.println("----------");
 
-        PolyLine pl1 = new PolyLine(points);
-        pl1.appendPoint(new Point(1, -1));
-        pl1.appendPoint(new Point(0, 0));
-        System.out.println("PolyLine length: " + pl1.getLength());
+        PolyLine pl = new PolyLine(points);
+        pl.appendPoint(new Point(1, -1)).appendPoint(new Point(0, 0));
+        System.out.println("PolyLine length: " + pl.getLength());
         System.out.println("----------");
-        System.out.println(pl1);
+        System.out.println(pl);
         System.out.println("----------");
     }
 }
