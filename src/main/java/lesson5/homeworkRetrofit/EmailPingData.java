@@ -117,7 +117,7 @@ public class EmailPingData {
 
     @Override
     public String toString() {
-        return "email_address: " + email_address + '\n' +
+        return '\n' + "email_address: " + email_address + '\n' +
                 "domain: " + domain + '\n' +
                 "valid_syntax: " + valid_syntax + '\n' +
                 "disposable: " + disposable + '\n' +
