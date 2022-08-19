@@ -63,9 +63,9 @@ public class ListPractice {
 
     public static boolean checkRelevantElementsVer2(List<Integer> s1, List<Integer> s2) {
         for (int i = 0; i < s1.size(); i++) {
-            if (s1.get(i).equals(s2.get(i))) {
-                continue;
-            } else return false;
+            if (!s1.get(i).equals(s2.get(i))) {
+                return false;
+            }
         }
         return true;
     }
