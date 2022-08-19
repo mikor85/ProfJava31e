@@ -83,7 +83,7 @@ public class ListPractice {
 
     // Task 3
     public static String firstMetShortestOrLongestString(List<String> s) {
-        StringBuilder stringRes = new StringBuilder("");
+        StringBuilder stringRes = new StringBuilder();
         int minL = s.get(0).length();
         int minLIndex = 0;
         int maxL = s.get(0).length();
