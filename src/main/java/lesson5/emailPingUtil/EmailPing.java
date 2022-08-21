@@ -1,4 +1,4 @@
-package lesson5.homeworkRetrofit;
+package lesson5.emailPingUtil;
 
 // ДЗ проф ява:
 // Выберите на https://github.com/public-apis/public-apis любой сервис без apiKey

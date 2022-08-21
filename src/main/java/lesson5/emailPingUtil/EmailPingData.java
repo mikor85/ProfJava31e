@@ -1,4 +1,4 @@
-package lesson5.homeworkRetrofit;
+package lesson5.emailPingUtil;
 
 
 // {"status":"success",

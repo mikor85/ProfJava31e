@@ -1,4 +1,4 @@
-package lesson5.homeworkRetrofit;
+package lesson5.emailPingUtil;
 
 import retrofit2.Call;
 import retrofit2.Response;
