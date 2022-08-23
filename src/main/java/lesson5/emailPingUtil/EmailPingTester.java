@@ -32,7 +32,7 @@ public class EmailPingTester {
         EmailPingService service = retrofit.create(EmailPingService.class);
 
         //Call<EmailPing> call = service.getEmailAddress("email?email=cormakoff@gmail.com");
-        Call<EmailPing> call = service.getEmailAddress("dmitrij@rs-steel.lv");
+        Call<EmailPing> call = service.getEmailAddress("michail.kormakov@gmail.com");
 
         Response<EmailPing> response = call.execute();
 

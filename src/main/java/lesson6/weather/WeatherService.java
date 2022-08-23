@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 public interface WeatherService {
 
     @GET("v1/forecast")
-    Call<Location> getWeather(
+    Call<Weather> getWeather(
             @Query("latitude") double latitude,
             @Query("longitude") double longitude,
             @Query("hourly") String hourly

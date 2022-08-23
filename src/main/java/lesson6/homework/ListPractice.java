@@ -28,6 +28,8 @@ public class ListPractice {
         System.out.println("----------");
         System.out.println(checkRelevantElementsVer2(s11, s12));
         System.out.println("----------");
+        System.out.println(checkRelevantElementsVer3(s11, s12));
+        System.out.println("----------");
 
         System.out.println("Task 2:");
         List<Integer> s21 = Arrays.asList(1, 2, 3, 4);
@@ -40,11 +42,16 @@ public class ListPractice {
         List<String> s32 = Arrays.asList("Elephant", "Dog", "Penguin", "Horse");
         System.out.println(firstMetShortestOrLongestString(s31));
         System.out.println(firstMetShortestOrLongestString(s32));
+        System.out.println(compareStringLists(s31));
+        System.out.println(compareStringLists(s32));
         System.out.println("----------");
 
         System.out.println("Task 4:");
         List<String> s4 = Arrays.asList("Car", "Truck", "Bicycle", "Car", "Buggy", "Train", "Truck", "Plane", "Rocket", "Plane");
         System.out.println(optimizedList(s4));
+        System.out.println("----------");
+        String[] s5 = new String[]{"Car", "Truck", "Bicycle", "Car", "Buggy", "Train", "Truck", "Plane", "Rocket", "Plane"};
+        System.out.println(Arrays.toString(removeDuplicates(s5)));
         System.out.println("----------");
 
 
@@ -70,15 +77,19 @@ public class ListPractice {
         return true;
     }
 
+    public static boolean checkRelevantElementsVer3(List<Integer> s1, List<Integer> s2) {
+        return s1.equals(s2);
+    }
+
     // Task 2
     public static List<String> isEqualElements(List<Integer> s1, List<Integer> s2) {
-        List<String> s = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         for (int i = 0; i < s1.size(); i++) {
             if (s1.get(i).equals(s2.get(i))) {
-                s.add(i, "Yes");
-            } else s.add(i, "No");
+                res.add(i, "Yes");
+            } else res.add(i, "No");
         }
-        return s;
+        return res;
     }
 
     // Task 3
@@ -101,7 +112,30 @@ public class ListPractice {
         if (minLIndex < maxLIndex) {
             stringRes.append(s.get(minLIndex));
         } else stringRes.append(s.get(maxLIndex));
+
         return stringRes.toString();
+    }
+
+    public static String compareStringLists(List<String> s) {
+        String min = s.get(0);
+        String max = s.get(0);
+        int minPos = 0;
+        int maxPos = 0;
+        for (int i = 1; i < s.size(); i++) {
+            String t = s.get(i);
+            if (t.length() < min.length()) {
+                min = t;
+                minPos = i;
+            }
+            if (t.length() > max.length()) {
+                max = t;
+                maxPos = i;
+            }
+        }
+        if (minPos <= maxPos)
+            return min;
+        else
+            return max;
     }
 
     // Task 4
@@ -120,5 +154,24 @@ public class ListPractice {
             }
         }
         return res;
+    }
+
+    public static String[] removeDuplicates(String[] s) {
+        Arrays.sort(s);
+        List<String> r = new ArrayList<>();
+        String current = s[0];
+        r.add(current);
+        for (int i = 1; i < s.length; i++) {
+            if (!current.equals(s[i])) {
+                current = s[i];
+                r.add(current);
+            }
+        }
+//        String[] result = new String[r.size()];
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = r.get(i);
+//        }
+//        return result;
+        return r.toArray(new String[]{});
     }
 }
