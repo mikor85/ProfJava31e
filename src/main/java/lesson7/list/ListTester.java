@@ -42,7 +42,5 @@ public class ListTester {
         for (int i : list) {  // Iterable - добавляем имплементацию в класс
             System.out.println("My list: " + i);
         }
-
-
     }
 }
