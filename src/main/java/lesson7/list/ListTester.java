@@ -39,7 +39,7 @@ public class ListTester {
             System.out.println("iterator next: " + myIterator.next());
         }
 
-        for (int i : list) {  // Iterable - добавляем имплементацию в класс
+        for (int i : list) {  // Iterable - добавляем extends Iterable в класс в интерфейс
             System.out.println("My list: " + i);
         }
     }
