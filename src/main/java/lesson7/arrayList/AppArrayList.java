@@ -11,7 +11,7 @@ public class AppArrayList {
         list.append(2);
         list.append(3);
         list.printArray();
-        list.delete(1);
+        list.remove(1);
         list.printArray();
 
         System.out.println("--------------------");

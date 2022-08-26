@@ -7,6 +7,8 @@ public interface MyList extends Iterable<Integer> {
 
     void add(int index, int value);
 
+    void set(int index, int value);
+
     boolean contains(int value);
 
     int get(int index);
@@ -17,4 +19,9 @@ public interface MyList extends Iterable<Integer> {
 
     Iterator<Integer> iterator();
 
+    void addFirst(int value);
+
+    void removeFirst();
+
+    int getFirst();
 }

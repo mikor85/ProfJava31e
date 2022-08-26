@@ -25,8 +25,12 @@ public interface AdvancedArrayList extends Iterable {
     void insert(int index, int value);
     //void insert(int index, int [] a);
 
-    void delete(int index);
+    void add(int value);
+
+    void remove(int index);
     //void delete(int index, int howMany);
+
+    void insert(int index);
 
     boolean contains(int value);
 

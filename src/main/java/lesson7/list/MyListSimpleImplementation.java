@@ -35,6 +35,11 @@ public class MyListSimpleImplementation implements MyList {
     }
 
     @Override
+    public void set(int index, int value) {
+
+    }
+
+    @Override
     public boolean contains(int value) {
         return false;
     }
@@ -71,7 +76,7 @@ public class MyListSimpleImplementation implements MyList {
 
             @Override
             public boolean hasNext() {
-                return position < size();  // проверяем если позиция итераторе меньше длины контейнера
+                return position < size();  // проверяем если позиция итератора меньше длины контейнера
             }
 
             @Override
@@ -79,5 +84,20 @@ public class MyListSimpleImplementation implements MyList {
                 return get(position++);
             }
         };
+    }
+
+    @Override
+    public void addFirst(int value) {
+
+    }
+
+    @Override
+    public void removeFirst() {
+
+    }
+
+    @Override
+    public int getFirst() {
+        return 0;
     }
 }

@@ -72,7 +72,12 @@ public class MyArrayList implements AdvancedArrayList {
     }
 
     @Override
-    public void delete(int index) {
+    public void add(int value) {
+
+    }
+
+    @Override
+    public void remove(int index) {
         int[] newSource = new int[source.length - 1];
         for (int i = 0; i < index; i++) {
             newSource[i] = source[i];
@@ -81,6 +86,11 @@ public class MyArrayList implements AdvancedArrayList {
             newSource[i - 1] = source[i];
         }
         source = newSource;
+    }
+
+    @Override
+    public void insert(int index) {
+
     }
 
     @Override

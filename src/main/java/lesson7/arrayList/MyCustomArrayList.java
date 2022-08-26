@@ -72,7 +72,30 @@ public class MyCustomArrayList implements AdvancedArrayList {
     }
 
     @Override
-    public void delete(int index) {
+    public void add(int value) {
+        int [] newData = new int[size() + 1];
+        for (int i = 0; i < size(); i++) {
+            newData[i]  = data[i];
+        }
+        newData[size()] = value;
+        data = newData;
+    }
+
+    @Override
+    public void remove(int index) {
+        int[] newSource = new int[data.length - 1];
+        for (int i = 0; i < index; i++) {
+            newSource[i] = data[i];
+        }
+        for (int i = index + 1; i < data.length; i++) {
+            newSource[i - 1] = data[i];
+        }
+        data = newSource;
+    }
+
+
+    @Override
+    public void insert(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -131,12 +154,14 @@ public class MyCustomArrayList implements AdvancedArrayList {
 
             @Override
             public Integer next() {
-                return get(position++);
+                if (position < size()) {
+                    return get(position++);
+                } else return null;
             }
 
             @Override
             public void remove() {
-                Iterator.super.remove();
+                MyCustomArrayList.this.remove(position);
             }
         };
     }
