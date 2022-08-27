@@ -3,6 +3,8 @@ package lesson7.list;
 import java.util.Iterator;
 
 public interface MyList extends Iterable<Integer> {
+    boolean isEmpty();
+
     void add(int i);
 
     void add(int index, int value);

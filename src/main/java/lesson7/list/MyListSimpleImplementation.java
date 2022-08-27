@@ -11,6 +11,11 @@ public class MyListSimpleImplementation implements MyList {
     }
 
     @Override
+    public boolean isEmpty() {
+        return data == null;
+    }
+
+    @Override
     public void add(int value) {
         int[] newData = new int[size() + 1];
         for (int i = 0; i < size(); i++) {

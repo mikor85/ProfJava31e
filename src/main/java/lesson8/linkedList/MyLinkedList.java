@@ -41,6 +41,11 @@ public class MyLinkedList implements MyList {
     }
 
     @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    @Override
     public void add(int value) {
         // идти начиная с head до последнего (пока getNext() != null)
         if (head == null) {
@@ -54,7 +59,6 @@ public class MyLinkedList implements MyList {
         // потом добавить новый Node и сделать так, чтобы последний на новый ссылался
         n.setNext(new Node(value));
     }
-
 
     @Override
     public void add(int index, int value) {
@@ -116,11 +120,11 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void remove(int index) {
-        Node n = head;
-        if (index == 0) {
-            n = n.getNext().getNext();
+        if (index == 0 && head != null) {
+            head = head.getNext();
             return;
         }
+        Node n = head;
         while (n != null) {
             if (index == 1) {
                 n.next = n.getNext().getNext();
@@ -166,17 +170,22 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void addFirst(int value) {
-
+        if (head == null) {
+            head = new Node(value);
+        }
+        Node n = new Node(value);
+        n.setNext(head);
+        head = n;
     }
 
     @Override
     public void removeFirst() {
-
+        head = head.getNext();
     }
 
     @Override
     public int getFirst() {
-        return 0;
+        return head.getValue();
     }
 
     private static class Node {
@@ -218,11 +227,28 @@ public class MyLinkedList implements MyList {
         l.add(1);
         l.add(2);
         l.add(3);
+        l.add(4);
+        l.add(5);
         System.out.println(l);
-        System.out.println(l.size());
-        l.remove(0);
-        System.out.println(l);
-        System.out.println(l.size());
+        System.out.println("Size of current linked list is: " + l.size());
+        System.out.println("----------");
+        l.remove(3);
+        System.out.println("After remove method: " + l);
+        System.out.println("----------");
+        l.removeFirst();
+        System.out.println("After removeFirst method: " + l);
+        System.out.println("----------");
+        l.addFirst(1);
+        System.out.println("After addFirst method: " + l);
+        System.out.println("Size of current linked list is: " + l.size());
+        System.out.println("----------");
+        l.addFirst(0);
+        System.out.println("After addFirst method: " + l);
+        System.out.println("Size of current linked list is: " + l.size());
+        System.out.println("getFirst object: " + l.getFirst());
+
+
+
 
     } // end of main
 }
