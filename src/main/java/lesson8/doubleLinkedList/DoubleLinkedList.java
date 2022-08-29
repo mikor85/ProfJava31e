@@ -7,8 +7,6 @@ package lesson8.doubleLinkedList;
 // добавить методы void addLast(int), void removeLast() и int getLast()
 // добавляющие, удаляющие и получающие последний элемент в списке.
 
-import lesson8.linkedList.MyLinkedList;
-
 import java.util.Iterator;
 
 public class DoubleLinkedList implements MyDoubleLinkedList {
@@ -143,7 +141,15 @@ public class DoubleLinkedList implements MyDoubleLinkedList {
 
     @Override
     public void set(int index, int value) {
-
+        DoubleLinkedNode doubleLinkedNode = head;
+        while (doubleLinkedNode != null) {
+            if (index == 0) {
+                doubleLinkedNode.setValue(value);
+                return;
+            }
+            index--;
+            doubleLinkedNode = doubleLinkedNode.getNext();
+        }
     }
 
     @Override
