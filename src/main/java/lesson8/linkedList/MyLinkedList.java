@@ -12,17 +12,41 @@ import java.util.Iterator;
 // 3. Дописать методы void addFirst(int), void removeFirst(), int getFirst()
 // добавляющие, удаляющие и получающие первый элемент в списке.
 
-// 4. **** Сделать DoubleLinkedList класс на базе MyLinkedList -
-// добавить ссылку на предыдущий элемент в каждый
-// DoubleLinkedNode (prev, next ссылки на предыдущий и следующий элементы)
-// и добавить ссылку DoubleLinkedNode tail (на конечный элемент) в класс;
-// добавить методы void addLast(int), void removeLast() и int getLast()
-// добавляющие, удаляющие и получающие последний элемент в списке.
-
 public class MyLinkedList implements MyList {
     // List implementations, LinkedList.
 
     private Node head;  // первый элемент списка
+
+    private static class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+    } // end of Node
 
     @Override
     public String toString() {
@@ -43,6 +67,17 @@ public class MyLinkedList implements MyList {
     @Override
     public boolean isEmpty() {
         return head == null;
+    }
+
+    @Override
+    public int size() {
+        int size = 0;
+        Node n = head;
+        while (n != null) {
+            size++;
+            n = n.getNext();
+        }
+        return size;
     }
 
     @Override
@@ -77,6 +112,16 @@ public class MyLinkedList implements MyList {
         if (one != null) {
             one.setNext(new Node(value, two));
         }
+    }
+
+    @Override
+    public void addFirst(int value) {
+        if (head == null) {
+            head = new Node(value);
+        }
+        Node n = new Node(value);
+        n.setNext(head);
+        head = n;
     }
 
     @Override
@@ -119,13 +164,21 @@ public class MyLinkedList implements MyList {
     }
 
     @Override
+    public int getFirst() {
+        return head.getValue();
+    }
+
+    @Override
     public void remove(int index) {
+        if (head.getNext() == null){
+            head = null;
+        }
         if (index == 0 && head != null) {
             head = head.getNext();
             return;
         }
         Node n = head;
-        while (n != null) {
+        while (n.getNext() != null) {
             if (index == 1) {
                 n.next = n.getNext().getNext();
                 return;
@@ -136,14 +189,8 @@ public class MyLinkedList implements MyList {
     }
 
     @Override
-    public int size() {
-        int size = 0;
-        Node n = head;
-        while (n != null) {
-            size++;
-            n = n.getNext();
-        }
-        return size;
+    public void removeFirst() {
+        head = head.getNext();
     }
 
     @Override
@@ -168,57 +215,6 @@ public class MyLinkedList implements MyList {
         };
     }
 
-    @Override
-    public void addFirst(int value) {
-        if (head == null) {
-            head = new Node(value);
-        }
-        Node n = new Node(value);
-        n.setNext(head);
-        head = n;
-    }
-
-    @Override
-    public void removeFirst() {
-        head = head.getNext();
-    }
-
-    @Override
-    public int getFirst() {
-        return head.getValue();
-    }
-
-    private static class Node {
-        private int value;
-        private Node next;
-
-        public Node(int value) {
-            this.value = value;
-        }
-
-        public Node(int value, Node next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
-
-    } // end of Node
-
     public static void main(String[] args) {
         // Node n = new MyLinkedList().new Node(); // внутренний не статический класс
         // Node n = new MyLinkedList.Node(); // внутренний статический класс
@@ -228,12 +224,12 @@ public class MyLinkedList implements MyList {
         l.add(2);
         l.add(3);
         l.add(4);
-        l.add(5);
         System.out.println(l);
         System.out.println("Size of current linked list is: " + l.size());
         System.out.println("----------");
-        l.remove(3);
+        l.remove(1);
         System.out.println("After remove method: " + l);
+        System.out.println("----------");
         System.out.println("----------");
         l.removeFirst();
         System.out.println("After removeFirst method: " + l);
@@ -247,7 +243,8 @@ public class MyLinkedList implements MyList {
         System.out.println("Size of current linked list is: " + l.size());
         System.out.println("getFirst object: " + l.getFirst());
 
-
+        System.out.println("----------");
+        l.iterator().remove();
 
 
     } // end of main

@@ -24,6 +24,13 @@ public class AppArrayList {
         while (myIterator.hasNext()) {
             System.out.println("iterator next: " + myIterator.next());
         }
+        System.out.println("----------");
+        for (Object i: list) {
+            System.out.println("My list: " + i);
+        }
+
+        System.out.println("----------");
+        list.iterator().remove();
         for (Object i: list) {
             System.out.println("My list: " + i);
         }
