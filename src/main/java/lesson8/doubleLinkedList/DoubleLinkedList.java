@@ -1,199 +1,175 @@
 package lesson8.doubleLinkedList;
 
-// 4. **** Сделать DoubleLinkedList класс на базе MyLinkedList -
-// добавить ссылку на предыдущий элемент в каждый
-// DoubleLinkedNode (prev, next ссылки на предыдущий и следующий элементы)
-// и добавить ссылку DoubleLinkedNode tail (на конечный элемент) в класс;
-// добавить методы void addLast(int), void removeLast() и int getLast()
-// добавляющие, удаляющие и получающие последний элемент в списке.
-
 import java.util.Iterator;
 
 public class DoubleLinkedList implements MyDoubleLinkedList {
 
-    private DoubleLinkedNode head;
-    private DoubleLinkedNode tail;
+    private DoubleLinkedNode head = null;
+    private DoubleLinkedNode tail = null;
+    private int size = 0;
 
-    private static class DoubleLinkedNode {
-        private int value;
-        private DoubleLinkedNode next;
-        private DoubleLinkedNode prev;
+    static class DoubleLinkedNode {
+        int value;
+        DoubleLinkedNode prev = null;
+        DoubleLinkedNode next = null;
 
         public DoubleLinkedNode(int value) {
             this.value = value;
         }
 
-        public DoubleLinkedNode(int value, DoubleLinkedNode next, DoubleLinkedNode prev) {
+        public DoubleLinkedNode(int value, DoubleLinkedNode prev, DoubleLinkedNode next) {
             this.value = value;
-            this.next = next;
             this.prev = prev;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public DoubleLinkedNode getNext() {
-            return next;
-        }
-
-        public void setNext(DoubleLinkedNode next) {
+            if (prev != null)
+                prev.next = this;
             this.next = next;
-        }
-
-        public DoubleLinkedNode getPrev() {
-            return prev;
-        }
-
-        public void setPrev(DoubleLinkedNode prev) {
-            this.prev = prev;
+            if (next != null)
+                next.prev = this;
         }
     }
 
     @Override
     public String toString() {
-        StringBuilder resPrint = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         DoubleLinkedNode node = head;
-        resPrint.append("[");
+        stringBuilder.append("[");
         while (node != null) {
-            resPrint.append(node.getValue());
-            node = node.getNext();
-            if (node != null) {
-                resPrint.append(", ");
+            stringBuilder.append(node.value);
+            if (node.next != null) {
+                stringBuilder.append(", ");
             }
+            node = node.next;
         }
-        resPrint.append("]");
-        return resPrint.toString();
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 
     @Override
     public boolean isEmpty() {
-        return head == null;
+        return false;
     }
 
     @Override
     public int size() {
-        int size = 0;
-        DoubleLinkedNode node = head;
-        while (node != null) {
-            size++;
-            node = node.getNext();
-        }
         return size;
     }
 
     @Override
     public void add(int index, int value) {
-
+        if (size() == 0 && index == 0) {
+            addLast(value);
+            return;
+        }
+        if (index == 0) {
+            DoubleLinkedNode newNode = new DoubleLinkedNode(value, null, head);
+            head = newNode;
+        } else if (index == size()) {
+            DoubleLinkedNode newNode = new DoubleLinkedNode(value, tail, null);
+            tail = newNode;
+        } else {
+            DoubleLinkedNode node = getNodeByIndex(index);
+            DoubleLinkedNode prev = node.prev;
+            new DoubleLinkedNode(value, prev, node);
+        }
+        size++;
     }
+
 
     @Override
     public void addFirst(int value) {
-        if (head == null && tail == null) {
-            head = new DoubleLinkedNode(value);
-            tail = head;
-            return;
-        }
-        if (size() == 1 /*&& head.equals(tail)*/) {
-            head = new DoubleLinkedNode(value);
-            tail.setPrev(head);
-            head.setNext(tail);
-            return;
-        }
-        DoubleLinkedNode doubleLinkedNode = new DoubleLinkedNode(value);
-        head.prev = doubleLinkedNode;
-        doubleLinkedNode.setNext(head);
-        head = doubleLinkedNode;
 
-//        System.out.println("=== TEST == START ===");
-//        System.out.println("HEAD.getNext() = " + head.getNext());
-//        System.out.println("HEAD.getPrev() = " + head.getPrev());
-//        System.out.println("TAIL.getNext() = " + tail.getNext());
-//        System.out.println("TAIL.getPrev() = " + tail.getPrev());
-//        System.out.println("=== TEST == STOP ===");
     }
 
     @Override
     public void addLast(int value) {
-        // проверяем, есть ли вообще объекты в листе
-        if (head == null && tail == null) {
-            head = new DoubleLinkedNode(value);
-            tail = head;
-            return;
+        if (tail == null) { // нет ни одного элемента
+            DoubleLinkedNode node = new DoubleLinkedNode(value);
+            // head = tail = node;
+            head = node;
+            tail = node;
+        } else {
+            DoubleLinkedNode node = new DoubleLinkedNode(value, tail, null);
+            // tail.next = node;
+            tail = node;
         }
-        // определяем условия добавления 1-ого элемента
-        if (size() == 1 /*&& head.equals(tail)*/) {
-            tail = new DoubleLinkedNode(value);
-            head.setNext(tail);
-            tail.setPrev(head);
-            return;
-        }
-        // определяем условия добавления 2-ого и последующих элементов
-        DoubleLinkedNode doubleLinkedNode = new DoubleLinkedNode(value);
-        tail.next = doubleLinkedNode;
-        doubleLinkedNode.setPrev(tail);
-        tail = doubleLinkedNode;
+        size++;
     }
 
     @Override
     public void set(int index, int value) {
-        DoubleLinkedNode doubleLinkedNode = head;
-        while (doubleLinkedNode != null) {
-            if (index == 0) {
-                doubleLinkedNode.setValue(value);
-                return;
-            }
-            index--;
-            doubleLinkedNode = doubleLinkedNode.getNext();
+        DoubleLinkedNode node = getNodeByIndex(index);
+        if (node != null) {
+            node.value = value;
         }
     }
 
     @Override
     public boolean contains(int value) {
+        DoubleLinkedNode node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return true;
+            }
+            node = node.next;
+        }
         return false;
     }
 
     @Override
     public int get(int index) {
+        DoubleLinkedNode node = getNodeByIndex(index);
+        return node != null ? node.value : 0;
+    }
+
+    private DoubleLinkedNode getNodeByIndex(int index) {
         DoubleLinkedNode node = head;
-        while (node != null) {
-            if (index == 0) {
-                return node.getValue();
-            }
+        while (node != null && index > 0) {
             index--;
-            node = node.getNext();
+            node = node.next;
         }
-        return node.getValue();
+        return node;
     }
 
     @Override
     public int getFirst() {
-        return head.getValue();
+        return 0;
     }
 
     @Override
     public int getLast() {
-        //System.out.println("TEST tail.prev = " + tail.getPrev());
-        return tail.getValue();
+        return get(size - 1);
     }
 
     @Override
     public void remove(int index) {
-
+        if (index == 0 && head != null) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            }
+        } else if (index == size() - 1) {
+            tail = tail.prev;
+            tail.next = null;
+        } else {
+            DoubleLinkedNode r = getNodeByIndex(index);
+            DoubleLinkedNode p = r.prev;
+            DoubleLinkedNode n = r.next;
+            if (p != null)
+                p.next = n;
+            if (n != null)
+                n.prev = p;
+        }
+        size--;
     }
 
     @Override
     public void removeFirst() {
-
+        remove(0);
     }
 
     @Override
     public void removeLast() {
-
+        remove(size() - 1);
     }
 
     @Override

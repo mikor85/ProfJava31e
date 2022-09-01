@@ -3,7 +3,7 @@ package lesson8.doubleLinkedList;
 public class AppDoubleLinkedList {
     public static void main(String[] args) {
 
-        DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+        DoubleLinkedListMy doubleLinkedList = new DoubleLinkedListMy();
         System.out.println(doubleLinkedList);
         System.out.println("Size of current linked list is: " + doubleLinkedList.size() + ".");
         System.out.println("----------");
