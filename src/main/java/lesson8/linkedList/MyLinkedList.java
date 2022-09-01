@@ -97,6 +97,19 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void add(int index, int value) {
+        if (index > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (head == null) {
+            head = new Node(value);
+            return;
+        }
+        if (index == 0) {
+            Node n = new Node(value);
+            n.setNext(head);
+            head = n;
+            return;
+        }
         Node n = head;
         Node one = null;
         Node two = null;
@@ -118,6 +131,7 @@ public class MyLinkedList implements MyList {
     public void addFirst(int value) {
         if (head == null) {
             head = new Node(value);
+            return;
         }
         Node n = new Node(value);
         n.setNext(head);
@@ -126,6 +140,9 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void set(int index, int value) {
+        if (index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
         Node n = head;
         while (n != null) {
             if (index == 0) {
@@ -151,35 +168,46 @@ public class MyLinkedList implements MyList {
 
     @Override
     public int get(int index) {
+        if (index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (index == 0) {
+            return head.getValue();
+        }
         Node n = head;
-        int i = 0;
-        while (n != null) {
+        while (n.getNext() != null) {
+            n = n.getNext();
+            index--;
             if (index == 0) {
                 return n.getValue();
             }
-            index--;
-            n = n.getNext();
         }
         return n.getValue();
     }
 
     @Override
     public int getFirst() {
+        if (head == null) {
+            throw new NullPointerException();
+        }
         return head.getValue();
     }
 
     @Override
     public void remove(int index) {
-        if (head.getNext() == null){
-            head = null;
+        if (head == null) {
+            throw new NullPointerException();
         }
-        if (index == 0 && head != null) {
+        if (index == 0) {
             head = head.getNext();
             return;
         }
+        if (head.getNext() == null) {
+            head = null;
+        }
         Node n = head;
         while (n.getNext() != null) {
-            if (index == 1) {
+            if (index == 1) {  // считаем до предыдущего элемента
                 n.next = n.getNext().getNext();
                 return;
             }
@@ -188,29 +216,65 @@ public class MyLinkedList implements MyList {
         }
     }
 
+    /*
+    @Override
+    public void remove(int index) { // delete
+        // 0 - удаляем head
+        // другие
+        Node n = head;
+        if(index == 0 && head != null)
+        {
+            head = n.getNext();
+            return;
+        }
+        while (n != null) // не head
+        {
+            if(index == 1) // считаем до предыдущего элемента
+            {
+                Node toRemove = n.getNext();
+                if(toRemove == null)
+                    return;
+                Node next = toRemove.getNext();
+                n.setNext(next);
+                return;
+            }
+            index--;
+            n = n.getNext();
+        }
+    } */
+
     @Override
     public void removeFirst() {
+        if (head == null) {
+            throw new NullPointerException();
+        }
+        if (head.getNext() == null) {
+            head = null;
+            return;
+        }
         head = head.getNext();
     }
 
-    @Override
+    @Override // ---
     public Iterator<Integer> iterator() {
         return new Iterator<Integer>() {
-            private int position = 0;
+            private int position = -1;
 
             @Override
             public boolean hasNext() {
-                return position < size();
+                // убедиться, что следующая позиция после position лежит внутри size()
+                // после операции проверки сдвинуть позицию вперед
+                return position++ + 1 < size();
             }
 
             @Override
             public Integer next() {
-                return get(position++);
+                return get(position);
             }
 
             @Override
             public void remove() {
-                MyLinkedList.this.remove(position);
+                MyLinkedList.this.remove(position--);
             }
         };
     }
@@ -220,16 +284,27 @@ public class MyLinkedList implements MyList {
         // Node n = new MyLinkedList.Node(); // внутренний статический класс
         MyLinkedList l = new MyLinkedList();
         System.out.println(l);
-        l.add(1);
-        l.add(2);
-        l.add(3);
-        l.add(4);
+        l.addFirst(1);
+        System.out.println(l);
+        l.set(0, 11);
+        System.out.println(l);
+        System.out.println("getFirst = " + l.getFirst());
+        System.out.println("Size of current linked list is: " + l.size());
+        l.addFirst(2);
+        System.out.println(l);
+        System.out.println("getFirst = " + l.getFirst());
+        int index = 0;
+        System.out.println("Object with index Nr." + index + " = " + l.get(index));
+        l.addFirst(3);
+        l.addFirst(4);
+        l.addFirst(5);
         System.out.println(l);
         System.out.println("Size of current linked list is: " + l.size());
         System.out.println("----------");
+        System.out.println("----------");
+        System.out.println("----------");
         l.remove(1);
         System.out.println("After remove method: " + l);
-        System.out.println("----------");
         System.out.println("----------");
         l.removeFirst();
         System.out.println("After removeFirst method: " + l);
@@ -245,6 +320,7 @@ public class MyLinkedList implements MyList {
 
         System.out.println("----------");
         l.iterator().remove();
+        System.out.println(l);
 
 
     } // end of main
