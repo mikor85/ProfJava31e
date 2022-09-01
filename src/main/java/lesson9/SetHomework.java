@@ -15,20 +15,20 @@ import java.util.Set;
 
 public class SetHomework {
     public static void main(String[] args) {
-        String[] countries = new String[]{"Andorra", "Belize", "Cayman", "France", "Argentina", "Cuba", "Sweden"};
-        String[] words = new String[]{"Andorra", "Canada", "First", "candy", "Argentina", "wood", "parrot", "cat", "Alan", "Cuba", "Finland", "Axelrod", "Avangard", "Cuba"};
+        String[] countries = new String[]{"Andorra", "Belize", "Cayman", "France", "Argentina", "Cuba", "Sweden", "Australia"};
+        String[] words = new String[]{"Andorra", "Canada", "First", "candy", "Argentina", "wood", "Australia", "parrot", "cat", "Alan", "Cuba", "Finland", "Axelrod", "Avangard", "Cuba"};
 
         System.out.println(getCountriesStartedAtA(countries, words));
     }
 
     private static Set<String> getCountriesStartedAtA(String[] countries, String[] words) {
-        Set<String> resSet = new HashSet<>();
+        Set<String> countriesStartedAtA = new HashSet<>();
         Set<String> checkSet = new HashSet<>(List.of(countries));
         for (String w : words) {
             if (checkSet.contains(w) && w.charAt(0) == 'A') {
-                resSet.add(w);
+                countriesStartedAtA.add(w);
             }
         }
-        return resSet;
+        return countriesStartedAtA;
     }
 }
