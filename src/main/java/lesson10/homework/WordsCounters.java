@@ -23,12 +23,33 @@ public class WordsCounters {
                 "чтобы исправить проблемы с работой и отображением веб-сайтов.";
         System.out.println(getDuplicateList(stringTask1));
         System.out.println("----------");
+        System.out.println(getDuplicates(stringTask1));
+        System.out.println("----------");
 
         System.out.println("Task Nr.2:");
         String stringTask2 = "один раз это один раз";
         wordsCounter(stringTask2);
 
     }
+
+    public static Collection<String> getDuplicates(String s) {
+        s = s.toLowerCase();
+        s = s.replaceAll("\\.", "");
+        s = s.replaceAll(",", "");
+        String[] tokens = s.split(" ");
+        //System.out.println(Arrays.toString(tokens));
+        Set<String> words = new HashSet<>();       // список слов
+        Set<String> duplicates = new HashSet<>();  // список дубликатов
+        for (String w : tokens) {
+            if (words.contains(w)) {
+                duplicates.add(w);
+            } else {
+                words.add(w);
+            }
+        }
+        return duplicates;
+    }
+
 
     // Task Nr.1
     private static Collection<String> getDuplicateList(String string) {
