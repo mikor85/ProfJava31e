@@ -13,7 +13,7 @@ public class CustomArrayDeque implements CustomDeque {
     }
 
     @Override
-    public void addFirst(int i) {
+    public void addFirst(int value) {
         if (size == source.length) {
             // делаем новый массив в 2 раза больше и копируем элементы из старого в начало нового
             increaseCapacity();
@@ -24,7 +24,7 @@ public class CustomArrayDeque implements CustomDeque {
 //        else
 //            firstElementIndex = firstElementIndex - 1;
 
-        source[firstElementIndex] = i;
+        source[firstElementIndex] = value;
         size++;
     }
 
@@ -64,8 +64,14 @@ public class CustomArrayDeque implements CustomDeque {
     }
 
     @Override
-    public void addLast(int i) {
-
+    public void addLast(int value) {
+        if (size == source.length) {
+            // делаем новый массив в 2 раза больше и копируем элементы из старого в начало нового
+            increaseCapacity();
+        }
+        int lastElementIndex = (size + firstElementIndex - 1) % source.length;
+        source[lastElementIndex] = value;
+        size++;
     }
 
     @Override
@@ -73,15 +79,21 @@ public class CustomArrayDeque implements CustomDeque {
         if (size == 0) {
             throw new IndexOutOfBoundsException();
         }
-        // проверить как находить
-        int lastElementIndex = size - 1;
-
+        int lastElementIndex = (size + firstElementIndex - 1) % source.length;
         return source[lastElementIndex];
     }
 
     @Override
     public int removeLast() {
-        return 0;
+        // вернуть значение элемента по последнему индексу,
+        // уменьшить на единицу size
+        if (size == 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        int lastElementIndex = (size + firstElementIndex - 1) % source.length;
+        int element = source[lastElementIndex];
+        size--;
+        return element;
     }
 
     @Override
