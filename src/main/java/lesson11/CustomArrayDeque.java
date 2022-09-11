@@ -1,5 +1,7 @@
 package lesson11;
 
+import java.util.Arrays;
+
 public class CustomArrayDeque implements CustomDeque {
 
     private int[] source;              // массив с содержимым
@@ -8,8 +10,44 @@ public class CustomArrayDeque implements CustomDeque {
 
     private static final int CAPACITY = 4;
 
-    CustomArrayDeque() {
+    public CustomArrayDeque() {
         source = new int[CAPACITY];
+    }
+
+    @Override
+    public String toString() {
+        int lastElementIndex = (size + firstElementIndex - 1) % source.length;
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        if (firstElementIndex == 0) {
+            for (int i = 0; i < size; i++) {
+                result.append(source[i]);
+                if (i != size - 1) {
+                    result.append(", ");
+                }
+            }
+        } else if (firstElementIndex + size <= source.length) {
+            for (int i = firstElementIndex; i < firstElementIndex + size; i++) {
+                result.append(source[i]);
+                if (i != firstElementIndex + size - 1) {
+                    result.append(", ");
+                }
+            }
+        } else {
+            for (int i = firstElementIndex; i < source.length; i++) {
+                result.append(source[i]);
+                result.append(", ");
+            }
+            for (int i = 0; i <= lastElementIndex; i++) {
+                result.append(source[i]);
+                if (i != lastElementIndex) {
+                    result.append(", ");
+                }
+            }
+        }
+        result.append("]");
+
+        return result.toString();
     }
 
     @Override
@@ -69,9 +107,10 @@ public class CustomArrayDeque implements CustomDeque {
             // делаем новый массив в 2 раза больше и копируем элементы из старого в начало нового
             increaseCapacity();
         }
+        size++;
         int lastElementIndex = (size + firstElementIndex - 1) % source.length;
         source[lastElementIndex] = value;
-        size++;
+        //size++;
     }
 
     @Override
