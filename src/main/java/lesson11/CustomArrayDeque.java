@@ -1,7 +1,5 @@
 package lesson11;
 
-import java.util.Arrays;
-
 public class CustomArrayDeque implements CustomDeque {
 
     private int[] source;              // массив с содержимым
