@@ -6,7 +6,7 @@ public class CustomArrayDeque implements CustomDeque {
 
     private int[] source;              // массив с содержимым
     private int size = 0;              // размер контейнера
-    private int firstElementIndex = 0; // чтобы быстрее удалить/добавить элемент в начало
+    private int firstElementIndex = 0; // чтобы быстрее удалить или добавить элемент в начало
 
     private static final int CAPACITY = 4;
 
