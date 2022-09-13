@@ -28,7 +28,10 @@ public class WordsCounters {
 
         System.out.println("Task Nr.2:");
         String stringTask2 = "один раз это один раз";
+        String stringTask3 = "one two tree one";
         wordsCounter(stringTask2);
+        System.out.println("----------");
+        stringWordsCounter(stringTask2);
 
     }
 
@@ -78,6 +81,65 @@ public class WordsCounters {
 
     // Пример: "один раз это один раз" распечатать "один":2, "раз":2, "это":1.
     // Task Nr.2
+
+    private static void stringWordsCounter(String s) {
+        Set<Word> w = new HashSet<>();
+        for (String a : s.split(" ")) {
+            Word d = new Word(a);
+            if (w.contains(d)) {
+                d = findWord(w, d);  // поиск Word с ключом 'a' в хэше 'w'
+            }
+            d.count++;  // в любом случае увеличиваем кол-во слов на единицу
+            w.add(d);
+        }
+        for (Word www : w) {
+            System.out.println(www);
+        }
+
+    }
+
+    private static Word findWord(Set<Word> w, Word d) {
+        for (Word ww : w) {
+            if (ww.equals(d)) {
+                return ww;
+            }
+        }
+        return null;
+    }
+
+    public static class Word {
+        public String key;
+        public int count = 0;
+
+        public Word(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String toString() {
+            return key + ": " + count;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Word word = (Word) o;
+
+            // if (count != word.count) return false;  // по кол-ву сравнивать нам не нужно
+            return Objects.equals(key, word.key);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = key != null ? key.hashCode() : 0;
+            // result = 31 * result + count;
+            return result;
+        }
+    }
+
+    // Мой вариант реализации
     private static void wordsCounter(String string) {
         List<String> words = new ArrayList<>(Arrays.asList(string.split("\\s")));
         Set<String> newWords = new HashSet<>(words);
@@ -93,5 +155,6 @@ public class WordsCounters {
                 System.out.print(sB + ": " + count + ", ");
             } else System.out.print(sB + ": " + count + ".");
         }
+        System.out.println();
     }
 }
