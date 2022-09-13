@@ -10,10 +10,13 @@ public class CustomArrayDequeTest {
     @Test
     public void testAddFirst() {
         CustomArrayDeque one = new CustomArrayDeque();
+        one.addFirst(50);
+        one.addFirst(40);
+        one.addFirst(30);
         one.addFirst(20);
         one.addFirst(10);
 
-        assertEquals("[10, 20]", one.toString());
+        assertEquals("[10, 20, 30, 40, 50]", one.toString());
     }
 
     @Test
@@ -41,6 +44,7 @@ public class CustomArrayDequeTest {
         one.addLast(20);
 
         assertEquals("[10, 20]", one.toString());
+        System.out.println(one);
     }
 
     @Test
@@ -56,8 +60,16 @@ public class CustomArrayDequeTest {
         CustomArrayDeque one = new CustomArrayDeque();
         one.addFirst(20);
         one.addFirst(10);
-        one.removeLast();
 
+        assertEquals(20, one.removeLast());
+        assertEquals(1, one.size());
         assertEquals("[10]", one.toString());
     }
+
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void testThrowsExceptionGettingElementFromEmptyDeque() {
+        CustomArrayDeque d = new CustomArrayDeque();
+        d.getLast();
+    }
+
 }

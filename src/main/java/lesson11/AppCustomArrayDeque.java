@@ -12,21 +12,8 @@ public class AppCustomArrayDeque {
         one.addLast(50);
         System.out.println(one);
         System.out.println("getFirst = " + one.getFirst());
-        System.out.println("getLast = " + one.getLast());
+        //System.out.println("getLast = " + one.getLast());
 
-
-//        System.out.println("---------");
-//        one.removeFirst();
-//        System.out.println("getFirst = " + one.getFirst());
-//        System.out.println("getLast = " + one.getLast());
-//        System.out.println(one);
-//        one.addLast(30);
-//        System.out.println("getFirst = " + one.getFirst());
-//        System.out.println("getLast = " + one.getLast());
-//        System.out.println("---------");
-//        one.addLast(40);
-//        //one.addLast(50);
-//        System.out.println(one);
 
     }
 }

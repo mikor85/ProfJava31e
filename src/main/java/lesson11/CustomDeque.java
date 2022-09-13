@@ -1,6 +1,5 @@
 package lesson11;
 
-
 // Deque - Double Ended Queue - двухсторонняя очередь,
 // обеспечивает добавление и получение элементов с обоих концов контейнера
 public interface CustomDeque {

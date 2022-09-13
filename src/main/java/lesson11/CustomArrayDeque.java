@@ -14,6 +14,21 @@ public class CustomArrayDeque implements CustomDeque {
 
     @Override
     public String toString() {
+        StringBuilder b = new StringBuilder();
+        b.append("[");
+        for (int i = 0; i < size; i++) {
+            b.append(source[(firstElementIndex + i) % source.length]);
+            if (i < size - 1)
+                b.append(", ");
+        }
+        b.append("]");
+        return b.toString();
+    }
+
+
+    // My version toString
+    // @Override
+    public String toStringVer2() {
         int lastElementIndex = (size + firstElementIndex - 1) % source.length;
         StringBuilder result = new StringBuilder();
         result.append("[");
@@ -99,8 +114,19 @@ public class CustomArrayDeque implements CustomDeque {
         return element;
     }
 
+
     @Override
     public void addLast(int value) {
+        if (size == source.length) {
+            increaseCapacity();
+        }
+        source[(firstElementIndex + size) % source.length] = value;
+        size++;
+    }
+
+    // My version addLast()
+    // @Override
+    public void addLastVer2(int value) {
         if (size == source.length) {
             // делаем новый массив в 2 раза больше и копируем элементы из старого в начало нового
             increaseCapacity();
