@@ -6,7 +6,7 @@ public class SetTester {
     public static void main(String[] args) {
         // Java Set implementation. Exercises.
 
-        // применение - проверка на уникальность;
+        // Применение - проверка на уникальность;
         // применение - поиск дубликатов;
         // Реализации:
         // HashSet - если правильно подобран алгоритм хэширования и параметры хэш,
