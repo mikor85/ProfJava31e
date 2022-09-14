@@ -32,9 +32,12 @@ public class SetComparison {
         }
         boolean res = false;
         if (s1.size() == s2.size()) {
-            StringBuilder temp = new StringBuilder();
             for (String s : s1) {
-                res = s2.contains(s);
+                if (s2.contains(s)) {
+                    res = true;
+                } else {
+                    return false;
+                }
             }
         }
         return res;
