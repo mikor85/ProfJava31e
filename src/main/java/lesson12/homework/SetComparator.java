@@ -90,7 +90,6 @@ public class SetComparator {
         if (temp.size() > result.size()) {
             result.clear();
             result.addAll(temp);
-            temp.clear();
         }
         return result;
     }
