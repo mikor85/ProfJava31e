@@ -1,5 +1,7 @@
 package lesson11;
 
+import java.util.Iterator;
+
 public class CustomArrayDeque implements CustomDeque {
 
     private int[] source;              // массив с содержимым
@@ -163,4 +165,38 @@ public class CustomArrayDeque implements CustomDeque {
     public int size() {
         return size;
     }
+
+    @Override
+    public Iterator<Integer> iteratorBackwards() {
+        return new Iterator<Integer>() {
+            private int position = 0;
+
+            @Override
+            public boolean hasNext() {
+                return position++ < size();
+            }
+
+            @Override
+            public Integer next() {
+                return source[((size + firstElementIndex) % source.length) - position];
+            }
+        };
+    }
+
+    @Override
+    public Iterator<Integer> iteratorValueBackwards() {
+        return new Iterator<Integer>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public Integer next() {
+                return null;
+            }
+        };
+    }
+
+
 }
