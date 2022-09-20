@@ -58,11 +58,34 @@ public class AppEmployee {
         System.out.println("----------");
         complexSort(employeeList, comparatorList);
         System.out.println(employeeList);
+
+        System.out.println("===== At the lesson =====");
+        Employee e1 = new Employee(2, "Max", 33, 22_000);
+        Employee e2 = new Employee(3, "John", 30, 25_000);
+        Employee e3 = new Employee(3, "Magda", 33, 22_000);
+        Comparator<Employee> c1 = new Employee.NameComparator();
+
+        System.out.println(
+                c1.compare(e1, e2)
+        );
+        List<Employee> employees = new ArrayList<>();
+        employees.add(e1);
+        employees.add(e2);
+        employees.add(e3);
+        Collections.sort(employees, Comparator
+                .comparing(Employee::getAge)
+                .thenComparing(Employee::getName));
+        System.out.println(employees);
+
+        complexSort(employees, Arrays.asList(new Employee.NameComparator(), new Employee.AgeComparator()));
+        System.out.println(employees);
     }
 
-    public static void complexSort(List<Employee> emps, List<Comparator<Employee>> comparators) {
-        for (Comparator<Employee> comp: comparators) {
-            emps.sort(comp);
+    public static void complexSort(List<Employee> employees, List<Comparator<Employee>> comparators) {
+        Comparator<Employee> comparator = comparators.get(0);
+        for (int i = 1; i < comparators.size(); i++) {
+            comparator.thenComparing(comparators.get(i));
         }
+        employees.sort(comparator);
     }
 }

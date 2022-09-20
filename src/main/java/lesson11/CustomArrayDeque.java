@@ -1,6 +1,8 @@
 package lesson11;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class CustomArrayDeque implements CustomDeque {
 
@@ -184,19 +186,52 @@ public class CustomArrayDeque implements CustomDeque {
     }
 
     @Override
-    public Iterator<Integer> iteratorValueBackwards() {
+    public Iterator<Integer> getBackwardIterator() {
         return new Iterator<Integer>() {
+            private int position = size;
+
             @Override
             public boolean hasNext() {
-                return false;
+                return --position >= 0;
             }
 
             @Override
             public Integer next() {
-                return null;
+                if (position < 0 || position >= size) {
+                    throw new NoSuchElementException();
+                }
+                return source[(firstElementIndex + position) % source.length];
             }
         };
     }
 
+    public BackwardIterator getBigToSmall() {
+        return new BackwardIterator();
+    }
 
+    private class BackwardIterator implements Iterator<Integer> {
+
+        private int[] data = new int[size];
+        private int position = size;
+
+        public BackwardIterator() {
+            for (int i = 0; i < size; i++) {
+                data[i] = source[(firstElementIndex + i) % source.length];
+            }
+            Arrays.sort(data);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return --position >= 0;
+        }
+
+        @Override
+        public Integer next() {
+            if (position < 0 || position >= size) {
+                throw new NoSuchElementException();
+            }
+            return data[position];
+        }
+    }
 }

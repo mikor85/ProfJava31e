@@ -19,8 +19,10 @@ public interface CustomDeque /*extends Iterable<Integer>*/ {
 
     int size();                                           // кол-во элементов в массиве - размер массива для пользователя
 
-    Iterator<Integer> iteratorBackwards();                // итератор для перебора в обратном направлении
+    Iterator<Integer> getBackwardIterator();                // итератор для перебора в обратном направлении
 
-    Iterator<Integer> iteratorValueBackwards();           // итератор для перебора по убыванию значений элементов
+    Iterator<Integer> iteratorBackwards();
+
+    //Iterator<Integer> getBigToSmallIterator();           // итератор для перебора по убыванию значений элементов
 
 }

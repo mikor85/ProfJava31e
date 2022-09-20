@@ -23,6 +23,7 @@ public class SetComparator {
         // Task Nr.4:
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 5, 6, 8, 10, 7, 4, 6, 8, 10));
         System.out.println(evenNumberFromList(list));
+        System.out.println(getLongestEvenSequence(list));
 
 
     }
@@ -69,6 +70,31 @@ public class SetComparator {
         return res;
     }
 
+    // Task Nr.4:
+    public static Collection<Integer> getLongestEvenSequence(List<Integer> l) {
+        List<Integer> result = new ArrayList<>();  // будем хранить самую длинную найденную до сих пор
+        List<Integer> r = new ArrayList<>();  // текущая последовательность
+        for (Integer i : l) {
+            // Проверить, четное ли число. Если да, добавить его в r.
+            if (i % 2 == 0) {
+                r.add(i);
+            } else {
+                // Если число нечетное, проверить длину r,
+                // если она больше чем длина result, скопировать r в result, очистить r.
+                if (r.size() > result.size()) {
+                    result.clear();
+                    result.addAll(r);
+                }
+            }
+        }
+        if (r.size() > result.size()) {
+            return r;
+        } else {
+            return result;
+        }
+    }
+
+    // My realization
     private static Collection<Integer> evenNumberFromList(List<Integer> list) {
         List<Integer> result = new ArrayList<>();
         List<Integer> temp = new ArrayList<>();
