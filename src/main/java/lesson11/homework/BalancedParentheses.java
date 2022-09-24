@@ -20,10 +20,9 @@ public class BalancedParentheses {
         for (char c : s.toCharArray()) {
             if (c == '(' || c == '[' || c == '{') {
                 chars.add(c);
-            } else if (
-                    c == ')' && chars.peek() == '(' ||
-                            c == ']' && chars.peek() == '[' ||
-                            c == '}' && chars.peek() == '{'
+            } else if (c == ')' && chars.peek() == '(' ||
+                    c == ']' && chars.peek() == '[' ||
+                    c == '}' && chars.peek() == '{'
             ) {
                 chars.pop();
             }
