@@ -4,9 +4,7 @@ package lesson14.Univer;
 // и класс Professor имя, зарплата и список его студентов.
 // Напишите геттеры, сеттеры и конструкторы, а также Comparator для преподавателя по числу его студентов.
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AppUniver {
     public static void main(String[] args) {
@@ -29,9 +27,19 @@ public class AppUniver {
         System.out.println(studentListSecond);
         System.out.println("----------");
 
-        Professor p1 = new Professor("Aleksandr Ivanovich", 18_000, studentListFirst);
+        Professor p1 = new Professor("Aleksandr Ivanovich", 18_000);
+        p1.addStudent(s1);
+        p1.addStudent(s3);
         System.out.println(p1);
-        Professor p2 = new Professor("Aleksey Petrovich", 20_000, studentListSecond);
+        Professor p2 = new Professor("Aleksey Petrovich", 20_000);
+        p2.addStudent(s2);
         System.out.println(p2.compareTo(p1));
+
+        List<Professor> professors = new ArrayList<>();
+        professors.add(p1);
+        professors.add(p2);
+        System.out.println(professors);
+        Collections.sort(professors, (o1, o2) -> Integer.compare(o1.getStudentList().size(), o2.getStudentList().size()));
+        System.out.println(professors);
     }
 }

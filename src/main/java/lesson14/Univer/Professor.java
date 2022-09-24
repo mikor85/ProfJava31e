@@ -1,11 +1,17 @@
 package lesson14.Univer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Professor implements Comparable<Professor> {
     private String name;
     private int salary;
-    private List<Student> studentList;
+    private List<Student> studentList = new ArrayList<>();
+
+    public Professor(String name, int salary) {
+        this.name = name;
+        this.salary = salary;
+    }
 
     public Professor(String name, int salary, List<Student> studentList) {
         this.name = name;
@@ -47,5 +53,11 @@ public class Professor implements Comparable<Professor> {
     @Override
     public int compareTo(Professor o) {
         return Integer.compare(studentList.size(), o.getStudentList().size());
+    }
+
+    public void addStudent(Student student) {
+        if (student != null) {
+            studentList.add(student);
+        }
     }
 }
