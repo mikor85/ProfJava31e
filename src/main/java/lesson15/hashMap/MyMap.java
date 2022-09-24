@@ -5,7 +5,7 @@ public interface MyMap {
 
     String get(String key);               // получение значения по ключу
 
-    String remove(String key);            // удаление пары по ключу
+    String remove(String key);            // возврат значение и удаление пары по ключу
 
     boolean contains(String key);         // содержится ли ключ в мапе
 

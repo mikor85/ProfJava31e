@@ -1,12 +1,10 @@
 package lesson15.hashMap;
 
-import java.util.Objects;
-
 public class MyHashMap implements MyMap {
     private int size = 0;                                   // количество пар в контейнере
     private static final int INITIAL_CAPACITY = 16;         // начальный размер массива
     private static final double LOAD_FACTOR = 0.75;         // коэффициент загруженности
-    // если size/source.length >= LOAD_FACTOR то нужно перебалансировать
+    // если size/source.length >= LOAD_FACTOR, то нужно сбалансировать контейнер
     // для равномерного распределения элементов чтобы не было длинных цепочек
 
     private Pair[] source = new Pair[INITIAL_CAPACITY]; // массив для хранения голов цепочек
@@ -30,7 +28,7 @@ public class MyHashMap implements MyMap {
         }
         Pair pair = findPair(key); // поиск пары по ключу
         if (pair == null) {
-            int bucket = findBucket(key);  // поиск номера ведар по ключу
+            int bucket = findBucket(key);  // поиск номера ведра по ключу
             pair = new Pair(key, value, source[bucket]);
             source[bucket] = pair;         // делаем новую пару корнем цепочки
             size++;
@@ -75,11 +73,40 @@ public class MyHashMap implements MyMap {
 
     @Override
     public String remove(String key) {
+        if (size == 0) {
+            return "Map container is empty";
+        }
+        int bucket = findBucket(key);      // ищем ведро
+        Pair currentPair = source[bucket]; // переходим к ведру
+        if (currentPair.key.equals(key)) {
+            if (currentPair.next == null) {
+                source[bucket] = null;
+                size--;
+                return currentPair.value;
+            }
+            source[bucket] = currentPair.next;
+            size--;
+            return currentPair.value;
+        }
+        while (currentPair.next != null) {
+            if (currentPair.next.key.equals(key)) {
+                Pair temp = currentPair.next;
+                currentPair.next = currentPair.next.next;
+                size--;
+                return temp.value;
+            }
+            currentPair = currentPair.next;
+        }
         return null;
     }
 
     @Override
     public boolean contains(String key) {
+        if (size >= 0) {
+            // ищем пару по ключу
+            Pair pair = findPair(key);
+            return pair != null;
+        }
         return false;
     }
 
