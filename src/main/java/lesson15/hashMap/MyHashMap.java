@@ -8,7 +8,6 @@ public class MyHashMap implements MyMap {
     // для равномерного распределения элементов чтобы не было длинных цепочек
 
     private Pair[] source = new Pair[INITIAL_CAPACITY]; // массив для хранения голов цепочек
-    public int sourceLength = source.length;  // удалить после обкатки кода
 
     private static class Pair {
         String key;     // ключ
@@ -20,6 +19,10 @@ public class MyHashMap implements MyMap {
             this.value = value;
             this.next = next;
         }
+    }
+
+    public int getInsideArrayLength(){
+        return source.length;
     }
 
     @Override
@@ -57,54 +60,24 @@ public class MyHashMap implements MyMap {
         return null;  // пара с ключом key не найдена
     }
 
+    // нужно ли обнулять next при копировании в новый увеличенный массив
     // балансировка массива - создание массива в два раза больше и перенос туда всех элементов
     private void resize() {
         // нужно создать новый массив в два раза больше, чем source
         Pair[] newSource = new Pair[source.length * 2];
-        for (int i = 0; i < source.length; i++) {
-            Pair currentPair = source[i];
-            while (currentPair != null) {
+        for (Pair pair : source) {
+            while (pair != null) {
                 // находим бакет в новом массиве
-                int bucket = Math.abs(currentPair.key.hashCode()) % newSource.length;
-                Pair newPair = newSource[bucket];
-                if (newPair == null) {
-                    newSource[bucket] = currentPair;
-                    currentPair = currentPair.next;
-                    continue;
-                } else {
-                    while (newPair != null) {
-                        newPair = newPair.next;
-                    }
-                    // в этом месте вместо newPair должно быть что-то связанное с newSource
-                    newPair = currentPair;
+                int bucket = Math.abs(pair.key.hashCode()) % newSource.length;
+                // делаем копируемую пару корнем цепочки
+                if (newSource[bucket] != null) {
+                    pair.next = newSource[bucket];
                 }
-                currentPair = currentPair.next;
+                newSource[bucket] = pair;
+                pair = pair.next;
             }
         }
         source = newSource;
-    }
-
-//    Pair pair = findPair(key); // поиск пары по ключу
-//        if (pair == null) {
-//        int bucket = findBucket(key);  // поиск номера ведра по ключу
-//        pair = new Pair(key, value, source[bucket]);
-//        source[bucket] = pair;         // делаем новую пару корнем цепочки
-//        size++;
-//    } else {
-//        pair.value = value;            // такая пара уже есть, поэтому меняем ее значение
-//    }
-
-    // поиск пары по ключу для resize
-    private Pair findPairResize(String key, Pair[] newSource) {
-        int bucket = Math.abs(key.hashCode()) % newSource.length;
-        Pair currentPair = newSource[bucket];  // корень цепочки
-        while (currentPair != null) {
-            if (currentPair.key.equals(key)) {
-                return currentPair;
-            }
-            currentPair = currentPair.next; // следующая пара по цепочке
-        }
-        return null;  // пара с ключом key не найдена
     }
 
     @Override
@@ -145,6 +118,7 @@ public class MyHashMap implements MyMap {
         return null;
     }
 
+    // правильно ли работает
     @Override
     public boolean contains(String key) {
         if (size >= 0) {
