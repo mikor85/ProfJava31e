@@ -11,7 +11,7 @@ public interface MyMapGeneric<K, V> {
 
     int size();               // количество пар
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         MyMapGeneric<String, Integer> map = new MyMapGeneric<String, Integer>() {
             @Override
             public void put(String key, Integer value) {

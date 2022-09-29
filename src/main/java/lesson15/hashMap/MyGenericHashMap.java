@@ -1,22 +1,20 @@
 package lesson15.hashMap;
 
-import java.util.Arrays;
-
-public class MyHashMap implements MyMap {
+public class MyGenericHashMap<K, V> implements MyMapGeneric<K, V> {
     private int size = 0;                                   // количество пар в контейнере
     private static final int INITIAL_CAPACITY = 4;         // начальный размер массива
     private static final double LOAD_FACTOR = 0.75;         // коэффициент загруженности
     // если size/source.length >= LOAD_FACTOR, то нужно сбалансировать контейнер
     // для равномерного распределения элементов чтобы не было длинных цепочек
 
-    private Pair[] source = new Pair[INITIAL_CAPACITY]; // массив для хранения голов цепочек
+    private Pair<K, V>[] source = new Pair[INITIAL_CAPACITY]; // массив для хранения голов цепочек
 
-    private static class Pair {
-        String key;     // ключ
-        String value;   // значение
-        Pair next;      // ссылка на следующую пару
+    private static class Pair<K, V> {
+        K key;     // ключ
+        V value;   // значение
+        Pair<K, V> next;      // ссылка на следующую пару
 
-        public Pair(String key, String value, Pair next) {
+        public Pair(K key, V value, Pair<K, V> next) {
             this.key = key;
             this.value = value;
             this.next = next;
@@ -33,14 +31,14 @@ public class MyHashMap implements MyMap {
     }
 
     @Override
-    public void put(String key, String value) {
+    public void put(K key, V value) {
         if (size >= LOAD_FACTOR * source.length) {
             resize();
         }
-        Pair pair = findPair(key); // поиск пары по ключу
+        Pair<K, V> pair = findPair(key); // поиск пары по ключу
         if (pair == null) {
             int bucket = findBucket(key);  // поиск номера ведра по ключу
-            pair = new Pair(key, value, source[bucket]);
+            pair = new Pair<>(key, value, source[bucket]);
             source[bucket] = pair;         // делаем новую пару корнем цепочки
             size++;
         } else {
@@ -50,12 +48,12 @@ public class MyHashMap implements MyMap {
     }
 
     // по ключу находит хэш и по хэшу находим бакет
-    private int findBucket(String key) {
+    private int findBucket(K key) {
         return Math.abs(key.hashCode()) % source.length;
     }
 
     // поиск пары по ключу
-    private Pair findPair(String key) {
+    private Pair<K, V> findPair(K key) {
         int bucket = findBucket(key);
         Pair currentPair = source[bucket];  // корень цепочки
         while (currentPair != null) {
@@ -68,7 +66,7 @@ public class MyHashMap implements MyMap {
     }
 
     private void resize() {
-        Pair[] newSource = new Pair[source.length * 2];
+        Pair<K, V>[] newSource = new Pair[source.length * 2];
         for (Pair pair : source) {  // текущий бакет
             Pair currentPair = pair;
             while (currentPair != null) {  // текущая пара
@@ -86,8 +84,8 @@ public class MyHashMap implements MyMap {
     public String toString() {
         int s = size - 1;
         StringBuilder b = new StringBuilder("[");
-        for (Pair pair : source) {
-            Pair currentPair = pair;
+        for (Pair<K, V> pair : source) {
+            Pair<K, V> currentPair = pair;
             while (currentPair != null) {
                 b.append(currentPair);
                 if (--s >= 0) {
@@ -106,8 +104,8 @@ public class MyHashMap implements MyMap {
     // My realization
     private void resizeMy() {
         // нужно создать новый массив в два раза больше, чем source
-        Pair[] newSource = new Pair[source.length * 2];
-        for (Pair pair : source) {
+        Pair<K, V>[] newSource = new Pair[source.length * 2];
+        for (Pair<K, V> pair : source) {
             while (pair != null) {
                 // находим бакет в новом массиве
                 int bucket = Math.abs(pair.key.hashCode()) % newSource.length;
@@ -123,8 +121,8 @@ public class MyHashMap implements MyMap {
     }
 
     @Override
-    public String get(String key) {
-        Pair pair = findPair(key);
+    public V get(K key) {
+        Pair<K, V> pair = findPair(key);
         if (pair == null) {
             return null;
         }
@@ -132,9 +130,9 @@ public class MyHashMap implements MyMap {
     }
 
     @Override
-    public String remove(String key) {
+    public V remove(K key) {
         int bucket = findBucket(key);
-        Pair currentPair = source[bucket];
+        Pair<K, V> currentPair = source[bucket];
         if (currentPair == null) {
             return null;
         }
@@ -145,7 +143,7 @@ public class MyHashMap implements MyMap {
         }
         while (currentPair.next != null) {
             if (currentPair.next.key.equals(key)) {
-                Pair pairToDelete = currentPair.next;
+                Pair<K, V> pairToDelete = currentPair.next;
                 currentPair.next = pairToDelete.next;
                 size--;
                 return pairToDelete.value;
@@ -157,12 +155,12 @@ public class MyHashMap implements MyMap {
 
     // My realization
     //@Override
-    public String removeMy(String key) {
-        if (size == 0) {
-            return "Map container is empty";
-        }
+    public V removeMy(K key) {
+//        if (size == 0) {
+//            return "Map container is empty";
+//        }
         int bucket = findBucket(key);      // ищем ведро
-        Pair currentPair = source[bucket]; // переходим к ведру
+        Pair<K, V> currentPair = source[bucket]; // переходим к ведру
         if (currentPair.key.equals(key)) {
             if (currentPair.next == null) {
                 source[bucket] = null;
@@ -175,7 +173,7 @@ public class MyHashMap implements MyMap {
         }
         while (currentPair.next != null) {
             if (currentPair.next.key.equals(key)) {
-                Pair temp = currentPair.next;
+                Pair<K, V> temp = currentPair.next;
                 currentPair.next = currentPair.next.next;
                 size--;
                 return temp.value;
@@ -186,7 +184,7 @@ public class MyHashMap implements MyMap {
     }
 
     @Override
-    public boolean contains(String key) {
+    public boolean contains(K key) {
         // Найдем пару с ключом key
         return findPair(key) != null;
     }
@@ -195,10 +193,10 @@ public class MyHashMap implements MyMap {
     // My realization
     // проверку размера делать не обязательно, поскольку изначально уже есть массив
     //@Override
-    public boolean containsMy(String key) {
+    public boolean containsMy(K key) {
         if (size >= 0) {
             // ищем пару по ключу
-            Pair pair = findPair(key);
+            Pair<K, V> pair = findPair(key);
             return pair != null;
         }
         return false;
