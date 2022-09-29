@@ -2,6 +2,7 @@ package lesson16;
 
 public class BinaryTreeTest {
     public static void main(String[] args) {
+        /*
         MyBinaryTree.Vortex v5 = new MyBinaryTree.Vortex(5);
         MyBinaryTree.Vortex v4 = new MyBinaryTree.Vortex(4);
         MyBinaryTree.Vortex v3 = new MyBinaryTree.Vortex(3);
@@ -13,8 +14,8 @@ public class BinaryTreeTest {
         System.out.println(tree.countVertices());
 
         System.out.println(tree);
-
         System.out.println(tree.depth());
+         */
         /*
             {
                 "name": "Max Kotkov",
@@ -26,5 +27,14 @@ public class BinaryTreeTest {
              }
          */
 
-    }
+        // Binary Search Tree BST
+        MyBinaryTree myBinaryTree = new MyBinaryTree();
+        myBinaryTree.add(6);
+        myBinaryTree.add(3);
+        myBinaryTree.add(10);
+        myBinaryTree.add(1);
+        System.out.println(myBinaryTree);  // {"left":{"left":{}, "value":3,"right":{}}, "value":6,"right":{"left":{}, "value":10,"right":{}}}
+
+
+    } // end of main
 }

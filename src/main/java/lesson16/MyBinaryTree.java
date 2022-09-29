@@ -42,21 +42,21 @@ public class MyBinaryTree {
 
         public int depth() {
             // вернуть глубину
-            return Math.max(
-                    1 + (right == null ? 0 : right.depth()),
-                    1 + (left == null ? 0 : left.depth())
+            return 1 + Math.max(
+                    right == null ? 0 : right.depth(),
+                    left == null ? 0 : left.depth()
             );
         }
 
         @Override
         public String toString() {
             StringBuilder b = new StringBuilder("{");
-            b.append("'left':");
+            b.append("\"left\":");
             b.append(left == null ? "{}" : left.toString());
-            b.append(", 'value':");
+            b.append(", \"value\":");
             b.append(value);
             b.append(",");
-            b.append("'right':");
+            b.append("\"right\":");
             b.append(right == null ? "{}" : right.toString());
             b.append("}");
             return b.toString();
@@ -64,6 +64,26 @@ public class MyBinaryTree {
 
 
     }  // end of class Vortex
+
+    private Vortex addRecursive(Vortex current, int value) {
+        if (current == null) {
+            return new Vortex(value);
+        }
+
+        // value == current.value - возвращаем current вершину
+        // value < current.value - добавляем вершину куда-то слева
+        // value > current.value - добавляем вершину куда-то справа
+        if (value < current.value) {
+            current.left = addRecursive(current.left, value);
+        } else if (value > current.value) {
+            current.right = addRecursive(current.right, value);
+        }
+        return current;
+    }
+
+    public void add(int value) {
+        root = addRecursive(root, value);
+    }
 
     @Override
     public String toString() {
