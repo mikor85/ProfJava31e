@@ -13,11 +13,10 @@ import java.util.TreeSet;
 public class FirstLetterTreeSet {
     public static void main(String[] args) {
         String[] strings = new String[]{"Hello", "Hell", "World"};
-        System.out.println(getSortedTreeSet(strings));
+        System.out.println(getTreeMap(strings));
     }
 
-    public static TreeMap<String, TreeSet<String>> getSortedTreeSet(String[] strings) {
-
+    public static TreeMap<String, TreeSet<String>> getTreeMap(String[] strings) {
         TreeMap<String, TreeSet<String>> resultTreeMap = new TreeMap<>();
         for (String string : strings) {
             StringBuilder firstLetter = new StringBuilder();
