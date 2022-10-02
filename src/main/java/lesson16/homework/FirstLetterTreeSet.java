@@ -17,14 +17,18 @@ public class FirstLetterTreeSet {
     }
 
     public static TreeMap<String, TreeSet<String>> getSortedTreeSet(String[] strings) {
-        StringBuilder firstLetter = new StringBuilder();
-        TreeSet<String> stringTreeSet = new TreeSet<>();
+
         TreeMap<String, TreeSet<String>> resultTreeMap = new TreeMap<>();
-        for (int i = 0; i < strings.length; i++) {
-            //TODO
-
+        for (String string : strings) {
+            StringBuilder firstLetter = new StringBuilder();
+            TreeSet<String> currentStringTreeSet = new TreeSet<>();
+            firstLetter.append(string.charAt(0));
+            if (resultTreeMap.containsKey(firstLetter.toString())) {
+                currentStringTreeSet = resultTreeMap.get(firstLetter.toString());
+            }
+            currentStringTreeSet.add(string);
+            resultTreeMap.put(firstLetter.toString(), currentStringTreeSet);
         }
-
         return resultTreeMap;
     }
 }
