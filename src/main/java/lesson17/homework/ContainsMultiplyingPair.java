@@ -5,6 +5,7 @@ package lesson17.homework;
 // => public static boolean test(int [] a, int b)
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ContainsMultiplyingPair {
@@ -12,8 +13,28 @@ public class ContainsMultiplyingPair {
         int[] array = new int[]{5, 7, 12, 2};
         int multiplyNumber = 10;
         System.out.println(containsMultiplyingPair(array, multiplyNumber));
+        System.out.println("----------");
+        System.out.println(test(array, multiplyNumber));
     }
 
+    public static boolean test(int[] a, int b) {
+        Arrays.sort(a);
+        int i = 0;
+        int j = a.length - 1;
+        while ((j - i) >= 1) {
+            int mul = a[i] * a[j];
+            if (mul == b) {
+                return true;
+            } else if (mul > b) {
+                j--;
+            } else {
+                i++;
+            }
+        }
+        return false;
+    }
+
+    // My realization
     private static boolean containsMultiplyingPair(int[] array, int multiplyNumber) {
         // List<Integer> arrList = Arrays.asList(array);
 

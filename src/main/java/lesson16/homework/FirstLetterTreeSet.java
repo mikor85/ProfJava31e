@@ -7,6 +7,7 @@ package lesson16.homework;
 // Пример: ["Hello", "Hell", "World"] -> {"H": ["Hell", "Hello"],  "W":["World"]}.
 // TreeMap<String, TreeSet<String>>.
 
+import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -16,6 +17,28 @@ public class FirstLetterTreeSet {
         System.out.println(getTreeMap(strings));
     }
 
+    public static TreeMap<String, TreeSet<String>> getFrequency(List<String> words) {
+        TreeMap<String, TreeSet<String>> res = new TreeMap<>();
+        // в цикле пробежаться по словам
+        for (String w : words) {
+            // получить с каждого первую букву
+            String key = "" + w.toCharArray()[0];
+            // по букве получить из ret TreeSet
+            TreeSet<String> vals = res.get(key);
+            // если TreeSet null то создать новый
+            if (vals == null)
+                vals = new TreeSet<>();
+            // добавить слово в TreeSet
+            vals.add(w);
+            // обновить пару первая буква -> TreeSet в res
+            res.put(key, vals);
+        }
+        // возвратить res
+        return res;
+    }
+
+
+    // My realization
     public static TreeMap<String, TreeSet<String>> getTreeMap(String[] strings) {
         TreeMap<String, TreeSet<String>> resultTreeMap = new TreeMap<>();
         for (String string : strings) {
