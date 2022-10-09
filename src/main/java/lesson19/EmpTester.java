@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EmpTester {
@@ -142,11 +143,21 @@ public class EmpTester {
 
         //List<Emp> empList =
         employees.stream()
-                .collect(Collectors.groupingBy(Emp::getAge, Collectors.counting()))
-                .entrySet()
-                .stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
                 .ifPresent(System.out::println);
+
+
+//        String input = "kjdf j df iue iue fdj j j";
+//        String word = Arrays.stream(input.split(" "))
+//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+//                .entrySet().stream()
+//                .max(Map.Entry.comparingByValue())
+//                .map(Map.Entry::getKey)
+//                .orElse(null);
+//        System.out.println("Most popular word is " + word);
 
 
         //Stream.of(1, 3, 4, 3, 4, 3, 2, 3, 3, 3, 3, 3)
