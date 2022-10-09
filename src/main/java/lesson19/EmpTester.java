@@ -84,12 +84,11 @@ public class EmpTester {
 
         System.out.println("----------");
         // посчитайте средний возраст
-        double averageAge =
-                employees.stream()
-                        .map(Emp::getAge)
-                        .reduce(0, Integer::sum)
-                        .doubleValue() / employees.size();
-        System.out.println("Средний возраст = " + averageAge);
+        System.out.print("Средний возраст = ");
+        employees.stream()
+                .mapToInt(Emp::getAge)
+                .average()
+                .ifPresent(System.out::println);
 
 
         System.out.println("----------");
@@ -125,24 +124,19 @@ public class EmpTester {
 
         System.out.println("----------");
         // вернуть средний возраст мужчин и женщин - у женщин фамилия оканчивается на "a"
-        List<Emp> men =
-                employees.stream()
-                        .filter(emp -> emp.getName().charAt(emp.getName().length() - 1) != 'a').toList();
-        double averageMenAge =
-                men.stream()
-                        .mapToDouble(Emp::getAge)
-                        .sum() / men.size();
-        System.out.println("Средний возраст мужчин = " + averageMenAge);
+        System.out.print("Средний возраст мужчин = ");
+        employees.stream()
+                .filter(emp -> emp.getName().charAt(emp.getName().length() - 1) != 'a')
+                .mapToInt(Emp::getAge)
+                .average()
+                .ifPresent(System.out::println);
 
-
-        List<Emp> women =
-                employees.stream()
-                        .filter(emp -> emp.getName().charAt(emp.getName().length() - 1) == 'a').toList();
-        double averageWomenAge =
-                women.stream()
-                        .mapToDouble(Emp::getAge)
-                        .sum() / women.size();
-        System.out.println("Средний возраст женщин = " + averageWomenAge);
+        System.out.print("Средний возраст женщин = ");
+        employees.stream()
+                .filter(emp -> emp.getName().charAt(emp.getName().length() - 1) == 'a')/*.toList()*/
+                .mapToInt(Emp::getAge)
+                .average()
+                .ifPresent(System.out::println);
 
 
         System.out.println("----------");
