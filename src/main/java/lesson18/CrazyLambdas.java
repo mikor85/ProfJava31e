@@ -35,9 +35,7 @@ public class CrazyLambdas {
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
         //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
-        return (s, n) -> {
-            return String.valueOf(s).repeat(Math.max(0, n));  // вернуть строку повторенную n раз
-        };
+        return String::repeat;
     }
 
     /**
@@ -148,12 +146,10 @@ public class CrazyLambdas {
      */
     public static Supplier<Thread> runningThreadSupplier(Runnable runnable) {
         //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
-        return new Supplier<Thread>() {
-
-            @Override
-            public Thread get() {
-                return new Thread(runnable);
-            }
+        return () -> {
+            Thread t = new Thread(runnable);
+            t.start();
+            return t;
         };
     }
 
@@ -163,7 +159,8 @@ public class CrazyLambdas {
      * @return a runnable consumer
      */
     public static Consumer<Runnable> newThreadRunnableConsumer() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return runnable -> new Thread(runnable).start();
     }
 
     /**
@@ -173,7 +170,12 @@ public class CrazyLambdas {
      * @return a function that transforms runnable into a thread supplier
      */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return runnable -> () -> {
+            Thread t = new Thread(runnable);
+            t.start();
+            return t;
+        };
     }
 
     /**
@@ -186,7 +188,18 @@ public class CrazyLambdas {
      * @return a binary function that receiver predicate and function and compose them to create a new function
      */
     public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return new BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator>() {
+            @Override
+            public IntUnaryOperator apply(IntUnaryOperator intUnaryOperator, IntPredicate intPredicate) {
+                return new IntUnaryOperator() {
+                    @Override
+                    public int applyAsInt(int operand) {
+                        return intPredicate.test(operand) ? intUnaryOperator.applyAsInt(operand) : operand;
+                    }
+                };
+            }
+        };
     }
 
     /**
@@ -197,7 +210,13 @@ public class CrazyLambdas {
      * @return a high-order function that fetches a function from a function map by a given name or returns identity()
      */
     public static BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return new BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator>() {
+            @Override
+            public IntUnaryOperator apply(Map<String, IntUnaryOperator> stringIntUnaryOperatorMap, String s) {
+                return stringIntUnaryOperatorMap.containsKey(s) ? stringIntUnaryOperatorMap.get(s) : IntUnaryOperator.identity();
+            }
+        };
     }
 
     /**
@@ -206,6 +225,22 @@ public class CrazyLambdas {
      * @return a supplier instance
      */
     public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        //throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return new Supplier<Supplier<Supplier<String>>>() {
+            @Override
+            public Supplier<Supplier<String>> get() {
+                return new Supplier<Supplier<String>>() {
+                    @Override
+                    public Supplier<String> get() {
+                        return new Supplier<String>() {
+                            @Override
+                            public String get() {
+                                return "WELL DONE!";
+                            }
+                        };
+                    }
+                };
+            }
+        };
     }
 }
