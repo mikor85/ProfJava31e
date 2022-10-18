@@ -1,71 +1,82 @@
 package lesson21.homework;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// Напишите функцию, которая получает на вход список строк и возвращает Map.
-// Ключ - это слово, а значение это список номеров строк, в которых это слово встречалось (concordance).
 public class Concordance {
     public static void main(String[] args) {
-        Concordance concordance = new Concordance();
-        List<String> stringList = List.of(
-                "Окружен рабов толпой,",
-                "С грозным деспотизма взором,",
-                "Афедрон ты жирный свой",
-                "Подтираешь коленкором;",
-                "Я же грешную дыру",
-                "Не балую детской модой",
-                "И Хвостова жесткой одой,",
-                "Хоть и морщуся, да тру."
+        List<String> lines = List.of(
+                "By the  old Moulmein Pagoda, lookin' lazy at the sea,",
+                "There's a Burma girl a-settin', and I know she thinks o' me;",
+                "For the wind is in the palm-trees, and the temple-bells they say:",
+                "Come you back, you British soldier; come you back to Mandalay! ",
+                "Come you back to Mandalay,",
+                "Where the old Flotilla lay:",
+                "Can't you 'ear their paddles chunkin' from Rangoon to Mandalay ?",
+                "On the road to Mandalay,",
+                "Where the flyin'-fishes play,",
+                "An' the dawn comes up like thunder outer China 'crost the Bay!"
         );
-        //concordance.getStringConcordance(stringList);
 
-        List<String> listTemp =
-                stringList.stream()
-                        .map(s -> s.replaceAll("\\p{Punct}", ""))
-                        .map(String::toLowerCase).toList();
-        System.out.println(listTemp);
-
-        Map<Integer, String> counterToStr = IntStream.range(0, listTemp.size())
-                .boxed()
-                .collect(Collectors.toMap(Function.identity(), listTemp::get));
-        System.out.println(counterToStr);
-
-        List<AbstractMap.SimpleEntry<String, Integer>> worldToLineNumber =
-                counterToStr.entrySet().stream()
-                        .flatMap(
-                                entry -> Arrays.stream(entry.getValue().split(" "))
-                                        .map(string -> new AbstractMap.SimpleEntry<String, Integer>(string, entry.getKey())))
-                        .toList();
-
-        System.out.println(worldToLineNumber);
+        TreeMap<String, Set<Integer>> result = new TreeMap<>(getConcordance(lines));
+        System.out.println(
+                result
+        );
 
     }
 
-    private Map<String, List<Integer>> getStringConcordance(List<String> stringList) {
-        List<String> listTemp =
-                stringList.stream()
-                        .map(s -> s.replaceAll("\\p{Punct}", ""))
-                        .map(String::toLowerCase).toList();
-        System.out.println(listTemp);
+    // *** Напишите функцию, которая получает на вход список строк и возвращает
+    // Map ключ которой это слово, а значение это список номеров строк,
+    // в которых это слово встречалось (concordance)
+    public static Map<String, Set<Integer>> getConcordance(List<String> lines) {
+        // вычистить строки от пунктуации
+        // как-то сделать пары из строки и номера строки
+        // номер строки -> строка
+        // слово        -> номер строки
 
-        Map<Integer, String> counterToStr = IntStream.range(0, listTemp.size())
-                .boxed()
-                .collect(Collectors.toMap(Function.identity(), listTemp::get));
-        System.out.println(counterToStr);
 
-        List<AbstractMap.SimpleEntry<String, Integer>> worldToLineNumber =
-                counterToStr.entrySet().stream()
-                        .flatMap(
-                                entry -> Arrays.stream(entry.getValue().split(" "))
-                                        .map(string -> new AbstractMap.SimpleEntry<String, Integer>(string, entry.getKey())))
+//        SimpleEntry<String, Integer> pa = new SimpleEntry<>("hello", 33);
+//        pa.getValue()  // 33
+//        pa.getKey()    // "hello"
+
+
+        Map<String, List<SimpleEntry<String, Integer>>>
+                mapWordToLineNumber =
+                IntStream.range(0, lines.size())  // int
+                        // .boxed int -> Integer
+                        .mapToObj(i -> new SimpleEntry<Integer, String>(i, lines.get(i)))  // Pair<Integer, String>
+                        // pair.getKey()
+                        // pair.getValue()
+                        .flatMap(pair ->
+                                Arrays.stream(pair
+                                                .getValue()  // каждая строка
+                                                .toLowerCase()
+                                                .replaceAll("\\p{Punct}", "")  // удаляем пунктуацию
+                                                .split("\\s+"))   // разбиваем по пробелу
+                                        .map(word -> new SimpleEntry<String, Integer>(word, pair.getKey()))
+                        )  // SimpleEntry<String, Integer>
+                        .collect(Collectors.groupingBy(
+                                entry -> entry.getKey()
+                        ));  // Map<String, List<SimpleEntry<String, Integer>>>
+
+        List<SimpleEntry<String, Set<Integer>>> result =
+                mapWordToLineNumber.entrySet().stream()
+                        .map(pair -> new SimpleEntry<String, Set<Integer>>(
+                                pair.getKey(),
+                                pair.getValue().stream().map(SimpleEntry::getValue).collect(Collectors.toCollection(TreeSet::new)))
+                        )
+                        .sorted(Map.Entry.comparingByKey())
                         .toList();
 
-        return null;
+        // System.out.println(result);
+
+
+        return result.stream().collect(Collectors.toMap(
+                SimpleEntry::getKey,
+                SimpleEntry::getValue
+        ));
     }
+
 }
