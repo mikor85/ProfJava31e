@@ -1,0 +1,1 @@
+{"name":"Murzik","age":2,"color":"Black","breed":"Siberian"}
