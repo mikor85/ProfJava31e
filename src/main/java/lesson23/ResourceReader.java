@@ -29,6 +29,4 @@ public class ResourceReader {
                 .reduce(0, Integer::sum);
         System.out.println("sum2 = " + sum2);
     }
-
-
 }
