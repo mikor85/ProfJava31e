@@ -15,8 +15,7 @@ public class JsonClassTester {
         String fileTxt = "jsonObject.txt";
         //jsonTxtFileWriter(cat1, fileTxt);
         System.out.println(jsonTxtFileReaderMy(fileTxt));
-        Cat c = jsonTxtFileReader(fileTxt, Cat.class);
-        System.out.println(c);
+        System.out.println(jsonTxtFileReader(fileTxt, Cat.class));
     }
 
     public static void jsonTxtFileWriter(Object o, String file) {
