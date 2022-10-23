@@ -31,7 +31,9 @@ public class DirectoryFileFilter {
     // Task Nr.3:
     public static void printFilesRec(String dirPath) {
         File[] files = new File(dirPath).listFiles();
-        printFileName(0, files);
+        if (files != null) {
+            printFileName(0, files);
+        }
     }
 
     public static void printFileName(int index, File[] files) {
@@ -39,6 +41,6 @@ public class DirectoryFileFilter {
             return;
         }
         printFileName(index + 1, files);
-        System.out.println(files[index]);
+        System.out.println(files[index].getName());
     }
 }
