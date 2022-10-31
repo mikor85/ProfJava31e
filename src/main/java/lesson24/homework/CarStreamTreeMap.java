@@ -1,9 +1,16 @@
 package lesson24.homework;
 
 // 2. *** Переделать четвертое задание (с машинами) на stream.
+// Напишите функцию, принимающую список автомобилей и возвращающую
+// TreeMap<String, List<Car>> где ключ - это производитель maker,
+// а в списке - автомобили этого производителя отсортированные по цене по убыванию.
 
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 
 public class CarStreamTreeMap {
     public static void main(String[] args) {
@@ -20,6 +27,53 @@ public class CarStreamTreeMap {
 
     public static TreeMap<String, List<Car>> sortCarsStream(List<Car> cars) {
 
-        return null;
+        return cars.stream()
+                .collect(new Collector<Car, TreeMap<String, List<Car>>, TreeMap<String, List<Car>>>() {
+                    @Override
+                    public Supplier<TreeMap<String, List<Car>>> supplier() {
+                        return TreeMap::new;
+                    }
+
+                    @Override
+                    public BiConsumer<TreeMap<String, List<Car>>, Car> accumulator() {
+                        return (treeMap, car) -> {
+                            // взять по значению ключа лист с авто
+                            // проверить, есть ли в TreeSet лист с нужным ключом (производитель)
+                            // если List отсутствует, то его нужно создать
+                            // добавить в лист новый авто
+                            // отсортировать лист по убыванию цены
+                            // добавить в TreeSet лист с авто
+                            if (treeMap.containsKey(car.getMaker())) {
+                                List<Car> carList = treeMap.get(car.getMaker());
+                                carList.add(car);
+                                carList.sort(Comparator.comparing(Car::getPrice).reversed());
+                                treeMap.put(car.getMaker(), carList);
+                            } else {
+                                List<Car> newCarList = new ArrayList<>();
+                                newCarList.add(car);
+                                newCarList.sort(Comparator.comparing(Car::getPrice).reversed());
+                                treeMap.put(car.getMaker(), newCarList);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public BinaryOperator<TreeMap<String, List<Car>>> combiner() {
+                        return (treeMap1, treeMap2) -> {
+                            treeMap1.putAll(treeMap2);
+                            return treeMap1;
+                        };
+                    }
+
+                    @Override
+                    public Function<TreeMap<String, List<Car>>, TreeMap<String, List<Car>>> finisher() {
+                        return Function.identity();
+                    }
+
+                    @Override
+                    public Set<Characteristics> characteristics() {
+                        return Set.of(Characteristics.UNORDERED, Characteristics.IDENTITY_FINISH);
+                    }
+                });
     }
 }
