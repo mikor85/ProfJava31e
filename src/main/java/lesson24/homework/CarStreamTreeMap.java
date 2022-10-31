@@ -22,10 +22,12 @@ public class CarStreamTreeMap {
         Car c5 = new Car("Nissan", "GTR", 73_000);
         Car c6 = new Car("Mitsubishi", "Gallant", 14_000);
         List<Car> cars = List.of(c1, c2, c3, c4, c5, c6);
+        System.out.println(sortCarsCollector(cars));
+        System.out.println("----------");
         System.out.println(sortCarsStream(cars));
     }
 
-    public static TreeMap<String, List<Car>> sortCarsStream(List<Car> cars) {
+    public static TreeMap<String, List<Car>> sortCarsCollector(List<Car> cars) {
 
         return cars.stream()
                 .collect(new Collector<Car, TreeMap<String, List<Car>>, TreeMap<String, List<Car>>>() {
@@ -43,17 +45,12 @@ public class CarStreamTreeMap {
                             // добавить в лист новый авто
                             // отсортировать лист по убыванию цены
                             // добавить в TreeSet лист с авто
-                            if (treeMap.containsKey(car.getMaker())) {
-                                List<Car> carList = treeMap.get(car.getMaker());
-                                carList.add(car);
-                                carList.sort(Comparator.comparing(Car::getPrice).reversed());
-                                treeMap.put(car.getMaker(), carList);
-                            } else {
-                                List<Car> newCarList = new ArrayList<>();
-                                newCarList.add(car);
-                                newCarList.sort(Comparator.comparing(Car::getPrice).reversed());
-                                treeMap.put(car.getMaker(), newCarList);
-                            }
+                            List<Car> carList =
+                                    treeMap.containsKey(car.getMaker()) ?
+                                            treeMap.get(car.getMaker()) : new ArrayList<>();
+                            carList.add(car);
+                            carList.sort(Comparator.comparing(Car::getPrice).reversed());
+                            treeMap.put(car.getMaker(), carList);
                         };
                     }
 
@@ -75,5 +72,20 @@ public class CarStreamTreeMap {
                         return Set.of(Characteristics.UNORDERED, Characteristics.IDENTITY_FINISH);
                     }
                 });
+    }
+
+    public static TreeMap<String, List<Car>> sortCarsStream(List<Car> cars) {
+        return cars.stream()
+                .collect(TreeMap::new,
+                        (treeMap, car) -> {
+                            List<Car> carList =
+                                    treeMap.containsKey(car.getMaker()) ?
+                                            treeMap.get(car.getMaker()) : new ArrayList<>();
+                            carList.add(car);
+                            carList.sort(Comparator.comparing(Car::getPrice).reversed());
+                            treeMap.put(car.getMaker(), carList);
+                        },
+                        TreeMap::putAll
+                );
     }
 }
