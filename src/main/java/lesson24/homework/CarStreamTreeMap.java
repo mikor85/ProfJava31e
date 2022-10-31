@@ -85,7 +85,6 @@ public class CarStreamTreeMap {
                             carList.sort(Comparator.comparing(Car::getPrice).reversed());
                             treeMap.put(car.getMaker(), carList);
                         },
-                        TreeMap::putAll
-                );
+                        TreeMap::putAll);
     }
 }
