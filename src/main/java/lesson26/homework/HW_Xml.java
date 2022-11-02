@@ -53,6 +53,7 @@ public class HW_Xml {
         return sum;
     }
 
+    // Task Nr.2:
     public static String getElementValue(Element element) {
         StringBuilder b = new StringBuilder();
         NodeList nodeList = element.getElementsByTagName("BOTANICAL");
