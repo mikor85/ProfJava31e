@@ -11,6 +11,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class CarStreamTreeMap {
     public static void main(String[] args) {
@@ -25,8 +26,50 @@ public class CarStreamTreeMap {
         System.out.println(sortCarsCollector(cars));
         System.out.println("----------");
         System.out.println(sortCarsStream(cars));
+        System.out.println("----------");
+        System.out.println(sortCars(cars));
+        System.out.println("----------");
+        System.out.println(sortCars1(cars));
     }
 
+    public static TreeMap<String, List<Car>> sortCars1(List<Car> cars) {
+        return cars.stream()
+                .collect(
+                        Collectors.toMap(
+                                Car::getMaker,
+                                car -> new ArrayList<>(List.of(car)),
+                                (f, s) -> {
+                                    f.addAll(s);
+                                    f.sort(Comparator.comparing(Car::getPrice).reversed());
+                                    return f;
+                                },
+                                TreeMap::new
+                        )
+                );
+    }
+
+    public static TreeMap<String, List<Car>> sortCars(List<Car> cars) {
+        return cars.stream()
+                .collect(Collectors.groupingBy(Car::getMaker))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                entry -> {
+                                    List<Car> crs = entry.getValue();
+                                    crs.sort(Comparator.comparing(Car::getPrice).reversed());
+                                    return crs;
+                                },
+                                (f, s) -> {
+                                    f.addAll(s);
+                                    return f;
+                                },
+                                TreeMap::new
+                        )
+                );
+    }
+
+    // My Collector
     public static TreeMap<String, List<Car>> sortCarsCollector(List<Car> cars) {
 
         return cars.stream()
@@ -74,6 +117,7 @@ public class CarStreamTreeMap {
                 });
     }
 
+    // My Stream
     public static TreeMap<String, List<Car>> sortCarsStream(List<Car> cars) {
         return cars.stream()
                 .collect(TreeMap::new,
