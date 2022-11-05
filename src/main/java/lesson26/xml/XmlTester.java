@@ -20,6 +20,15 @@ public class XmlTester {
         // упрощает навигацию по документу и поиск в нем полезной информации
         // требуется память на хранение и построение дерева
 
+        // XML
+        //   xml schema - проверка структуры xml документа на соответствие
+        //   DOM SAX - парсинг
+        //   XPath - запрос к содержимому документа, например, найти третий элемент с определенным именем,
+        //           у которого определенное значение атрибута и фрагмент текстового значения
+        //   XSLT - трансформация xml-документа в любой формат, в том числе и в xml
+        //   JAXB - аннотации, чтобы сериализовать и десериализовать объект в xml и обратно
+
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(new File("test.xml"));
