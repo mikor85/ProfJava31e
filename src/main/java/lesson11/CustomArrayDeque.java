@@ -170,7 +170,7 @@ public class CustomArrayDeque implements CustomDeque {
 
     @Override
     public Iterator<Integer> iteratorBackwards() {
-        return new Iterator<Integer>() {
+        return new Iterator<>() {
             private int position = 0;
 
             @Override
@@ -187,7 +187,7 @@ public class CustomArrayDeque implements CustomDeque {
 
     @Override
     public Iterator<Integer> getBackwardIterator() {
-        return new Iterator<Integer>() {
+        return new Iterator<>() {
             private int position = size;
 
             @Override
