@@ -46,8 +46,8 @@ public class MyGenericArrayList<V> implements MyArrayListGeneric<V> {
             increaseCapacity();
         }
 
-        for (int i = 0; i < a.length; i++) {
-            append((V) a[i]);
+        for (Object o : a) {
+            append((V) o);
         }
     }
 
@@ -137,7 +137,7 @@ public class MyGenericArrayList<V> implements MyArrayListGeneric<V> {
     @Override
     public Iterator<V> iterator() {
 
-        return new Iterator<V>() {
+        return new Iterator<>() {
             private int position = 0;
 
             @Override
