@@ -11,7 +11,7 @@ package lesson28.genericPractice.genericArrayList;
 
 import java.util.Iterator;
 
-public interface MyArrayListGeneric<V> extends Iterable {
+public interface MyArrayListGeneric<V> extends Iterable<V> {
     void set(int index, V value);
 
     V get(int index);
