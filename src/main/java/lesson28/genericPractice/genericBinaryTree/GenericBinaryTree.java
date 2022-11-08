@@ -1,13 +1,17 @@
 package lesson28.genericPractice.genericBinaryTree;
 
-public class BinaryTree {
+// Так как это дерево фактически является BinarySearchTree (BST)
+// из-за того, что хранит элементы по возрастанию,
+// то нам нужно иметь возможность сравнить два элемента между собой,
+// для этого элементы должны имплементить Comparable<T>.
+public class GenericBinaryTree<T extends Comparable<T>> {
 
-    private Vortex root;
+    private Vortex<T> root;
 
-    public BinaryTree() {
+    public GenericBinaryTree() {
     }
 
-    public BinaryTree(Vortex root) {
+    public GenericBinaryTree(Vortex<T> root) {
         this.root = root;
     }
 
@@ -19,16 +23,16 @@ public class BinaryTree {
         return root.depth();
     }
 
-    static class Vortex {
-        Vortex left;
-        Vortex right;
-        int value;
+    static class Vortex<T> {
+        Vortex<T> left;
+        Vortex<T> right;
+        T value;
 
-        public Vortex(int value) {
+        public Vortex(T value) {
             this.value = value;
         }
 
-        public Vortex(int value, Vortex left, Vortex right) {
+        public Vortex(T value, Vortex<T> left, Vortex<T> right) {
             this.left = left;
             this.right = right;
             this.value = value;
@@ -65,23 +69,32 @@ public class BinaryTree {
 
     }  // end of class Vortex
 
-    private Vortex addRecursive(Vortex current, int value) {
+    private Vortex<T> addRecursive(Vortex<T> current, T value) {
         if (current == null) {
-            return new Vortex(value);
+            return new Vortex<T>(value);
         }
 
         // value == current.value - возвращаем current вершину
         // value < current.value - добавляем вершину куда-то слева
         // value > current.value - добавляем вершину куда-то справа
-        if (value < current.value) {
+
+//        if (value < current.value) {
+//            current.left = addRecursive(current.left, value);
+//        } else if (value > current.value) {
+//            current.right = addRecursive(current.right, value);
+//        }
+//        return current;
+
+        // С использованием compareTo()
+        if (value.compareTo(current.value) < 0) {
             current.left = addRecursive(current.left, value);
-        } else if (value > current.value) {
+        } else if (value.compareTo(current.value) > 0) {
             current.right = addRecursive(current.right, value);
         }
         return current;
     }
 
-    public void add(int value) {
+    public void add(T value) {
         root = addRecursive(root, value);
     }
 

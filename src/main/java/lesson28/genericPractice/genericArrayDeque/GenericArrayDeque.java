@@ -4,16 +4,16 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class CustomArrayDeque<V> implements CustomDeque<V> {
+public class GenericArrayDeque<T> implements GenericDeque<T> {
 
-    private Object[] source;              // массив с содержимым
+    private T[] source;           // массив с содержимым
     private int size = 0;              // размер контейнера
     private int firstElementIndex = 0; // чтобы быстрее удалить или добавить элемент в начало
 
     private static final int CAPACITY = 4;
 
-    public CustomArrayDeque() {
-        source = new Object[CAPACITY];
+    public GenericArrayDeque() {
+        source = (T[]) new Object[CAPACITY];
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
     }
 
     @Override
-    public void addFirst(V value) {
+    public void addFirst(T value) {
         if (size == source.length) {
             increaseCapacity();
         }
@@ -40,7 +40,7 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
     }
 
     private void increaseCapacity() {
-        Object[] newSource = new Object[source.length * 2];
+        T[] newSource = (T[]) new Object[source.length * 2];
         int j = 0;  // индекс в новом массиве
         for (int i = firstElementIndex; i < source.length; i++) {
             newSource[j++] = source[i];
@@ -53,19 +53,19 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
     }
 
     @Override
-    public V getFirst() {
+    public T getFirst() {
         if (size == 0) {
             throw new IndexOutOfBoundsException();
         }
-        return (V) source[firstElementIndex];
+        return source[firstElementIndex];
     }
 
     @Override
-    public V removeFirst() {
+    public T removeFirst() {
         if (size == 0) {
             throw new IndexOutOfBoundsException();
         }
-        V element = (V) source[firstElementIndex];
+        T element = source[firstElementIndex];
         firstElementIndex = (firstElementIndex + 1) % source.length;
         size--;
         return element;
@@ -73,7 +73,7 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
 
 
     @Override
-    public void addLast(V value) {
+    public void addLast(T value) {
         if (size == source.length) {
             increaseCapacity();
         }
@@ -83,35 +83,33 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
 
     // My version addLast()
     // @Override
-    public void addLastVer2(V value) {
+    public void addLastVer2(T value) {
         if (size == source.length) {
-            // делаем новый массив в 2 раза больше и копируем элементы из старого в начало нового
             increaseCapacity();
         }
         size++;
         int lastElementIndex = (size + firstElementIndex - 1) % source.length;
         source[lastElementIndex] = value;
-        //size++;
     }
 
     @Override
-    public V getLast() {
+    public T getLast() {
         if (size == 0) {
             throw new IndexOutOfBoundsException();
         }
         int lastElementIndex = (size + firstElementIndex - 1) % source.length;
-        return (V) source[lastElementIndex];
+        return (T) source[lastElementIndex];
     }
 
     @Override
-    public V removeLast() {
+    public T removeLast() {
         // вернуть значение элемента по последнему индексу,
         // уменьшить на единицу size
         if (size == 0) {
             throw new IndexOutOfBoundsException();
         }
         int lastElementIndex = (size + firstElementIndex - 1) % source.length;
-        V element = (V) source[lastElementIndex];
+        T element = source[lastElementIndex];
         size--;
         return element;
     }
@@ -122,7 +120,7 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
     }
 
     @Override
-    public Iterator<V> iteratorBackwards() {
+    public Iterator<T> iteratorBackwards() {
         return new Iterator<>() {
             private int position = 0;
 
@@ -132,14 +130,14 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
             }
 
             @Override
-            public V next() {
-                return (V) source[((size + firstElementIndex) % source.length) - position];
+            public T next() {
+                return source[((size + firstElementIndex) % source.length) - position];
             }
         };
     }
 
     @Override
-    public Iterator<V> getBackwardIterator() {
+    public Iterator<T> getBackwardIterator() {
         return new Iterator<>() {
             private int position = size;
 
@@ -149,11 +147,11 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
             }
 
             @Override
-            public V next() {
+            public T next() {
                 if (position < 0 || position >= size) {
                     throw new NoSuchElementException();
                 }
-                return (V) source[(firstElementIndex + position) % source.length];
+                return source[(firstElementIndex + position) % source.length];
             }
         };
     }
@@ -162,9 +160,9 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
         return new BackwardIterator();
     }
 
-    private class BackwardIterator implements Iterator<V> {
+    private class BackwardIterator implements Iterator<T> {
 
-        private Object[] data = new Object[size];
+        private T[] data = (T[]) new Object[size];
         private int position = size;
 
         public BackwardIterator() {
@@ -180,11 +178,11 @@ public class CustomArrayDeque<V> implements CustomDeque<V> {
         }
 
         @Override
-        public V next() {
+        public T next() {
             if (position < 0 || position >= size) {
                 throw new NoSuchElementException();
             }
-            return (V) data[position];
+            return data[position];
         }
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PARK address="Main street, 54">
+    <CAR>
+        <MAKER>Peugeot</MAKER>
+        <MODEL>407</MODEL>
+        <PRICE>21000.0</PRICE>
+    </CAR>
+    <CAR>
+        <MAKER>Nissan</MAKER>
+        <MODEL>Patrol</MODEL>
+        <PRICE>16500.0</PRICE>
+    </CAR>
+</PARK>
