@@ -27,13 +27,13 @@ public class GetPI {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         Runnable runnable = new CountPIClass();
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(2);
 
         IntStream.range(0, 1_000_000)
-                .forEach(r -> executorService.submit(runnable));
+                .forEach(r -> service.submit(runnable));
 
         GetPIClass callable = new GetPIClass();
-        Future<Double> pi = executorService.submit(callable);
+        Future<Double> pi = service.submit(callable);
         Thread.sleep(10_000);
         if (pi.isDone()) {
             System.out.println("PI number is: " + pi.get());
@@ -41,14 +41,19 @@ public class GetPI {
             System.out.println("Result is not available at this time");
         }
 
-        executorService.shutdown();
+        service.shutdown();
+
+        //System.out.println("PI is = " + 4.0 * yes / (yes + no));
+
     } // main
 
     public synchronized static void increaseCounters(double R) {
         if (R < 1) {
             yes++;
+            //System.out.println("YES = " + yes);
         } else {
             no++;
+            //System.out.println("NO = " + no);
         }
     }
 
