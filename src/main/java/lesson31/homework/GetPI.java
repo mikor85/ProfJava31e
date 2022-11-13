@@ -32,28 +32,33 @@ public class GetPI {
         IntStream.range(0, 1_000_000)
                 .forEach(r -> service.submit(runnable));
 
-        GetPIClass callable = new GetPIClass();
-        Future<Double> pi = service.submit(callable);
-        Thread.sleep(10_000);
-        if (pi.isDone()) {
-            System.out.println("PI number is: " + pi.get());
-        } else {
-            System.out.println("Result is not available at this time");
-        }
+//        GetPIClass callable = new GetPIClass();
+//        Future<Double> pi = service.submit(callable);
+//        Thread.sleep(10_000);
+//        if (pi.isDone()) {
+//            System.out.println("PI number is: " + pi.get());
+//            System.out.println("YES count = " + yes);
+//            System.out.println("NO count = " + no);
+//            System.out.println("YES + NO counters = " + (yes + no));
+//        } else {
+//            System.out.println("Result is not available at this time");
+//        }
 
         service.shutdown();
+        Thread.sleep(500);
 
-        //System.out.println("PI is = " + 4.0 * yes / (yes + no));
+        System.out.println("PI is = " + 4.0 * yes / (yes + no));
+        System.out.println("YES count = " + yes);
+        System.out.println("NO count = " + no);
+        System.out.println("YES + NO counters = " + (yes + no));
 
     } // main
 
     public synchronized static void increaseCounters(double R) {
         if (R < 1) {
             yes++;
-            //System.out.println("YES = " + yes);
         } else {
             no++;
-            //System.out.println("NO = " + no);
         }
     }
 
