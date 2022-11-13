@@ -14,7 +14,15 @@ package lesson31.homework;
 // - создайте и запустите 1_000_000 таких Runnable через ExecutorService;
 // - по результатам эксперимента вычислите значение pi как 4.0*yes/(yes+no).
 
-//2. *** поэкспериментируйте с количеством потоков в ExecutrorService - при каком их примерном количестве вычисление занимает сравнительно меньше времени?
+// 2. *** поэкспериментируйте с количеством потоков в ExecutrorService -
+// при каком их примерном количестве вычисление занимает сравнительно меньше времени?
+
+// Результаты эксперимента:
+// Duration for 1 threads = 746
+// Duration for 2 threads = 917
+// Duration for 3 threads = 753
+// Duration for 4 threads = 767
+
 
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
@@ -27,9 +35,12 @@ public class GetPI {
     public static void main(String[] args) throws InterruptedException {
 
         Runnable runnable = new CountPIClass();
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        int threadAmount = 4;
+        ExecutorService service = Executors.newFixedThreadPool(threadAmount);
 
-        IntStream.range(0, 1_000_000)
+        long before = System.currentTimeMillis();
+        int runnableNum = 1_000_000;
+        IntStream.range(0, runnableNum)
                 .forEach(r -> service.submit(runnable));
 
 //        GetPIClass callable = new GetPIClass();
@@ -45,12 +56,17 @@ public class GetPI {
 //        }
 
         service.shutdown();
-        Thread.sleep(500);
+        int sleepTime = 500;
+        Thread.sleep(sleepTime);
 
         System.out.println("PI is = " + 4.0 * yes / (yes + no));
         System.out.println("YES count = " + yes);
         System.out.println("NO count = " + no);
-        System.out.println("YES + NO counters = " + (yes + no));
+        System.out.println("Number of EXECUTED threads = " + (yes + no));
+        System.out.println("Number of LOST threads = " + (runnableNum - yes - no));
+
+        long after = System.currentTimeMillis();
+        System.out.println("Duration for " + threadAmount + " threads = " + (after - before - sleepTime));
 
     } // main
 
