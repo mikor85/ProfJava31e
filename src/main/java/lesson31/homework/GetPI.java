@@ -24,7 +24,7 @@ public class GetPI {
     private static int yes = 0;
     private static int no = 0;
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws InterruptedException {
 
         Runnable runnable = new CountPIClass();
         ExecutorService service = Executors.newFixedThreadPool(2);
