@@ -34,7 +34,7 @@ public class GetPI {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Runnable runnable = new CountPIClass();
+        Runnable runnable = new RunnablePIClass();
         int threadAmount = 4;
         ExecutorService service = Executors.newFixedThreadPool(threadAmount);
 
@@ -43,11 +43,14 @@ public class GetPI {
         IntStream.range(0, runnableNum)
                 .forEach(r -> service.submit(runnable));
 
-//        GetPIClass callable = new GetPIClass();
-//        Future<Double> pi = service.submit(callable);
+//        Future<Double> pi = service.submit(new CallablePIClass());
 //        Thread.sleep(10_000);
 //        if (pi.isDone()) {
-//            System.out.println("PI number is: " + pi.get());
+//            try {
+//                System.out.println("PI number is: " + pi.get());
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            }
 //            System.out.println("YES count = " + yes);
 //            System.out.println("NO count = " + no);
 //            System.out.println("YES + NO counters = " + (yes + no));
@@ -78,7 +81,7 @@ public class GetPI {
         }
     }
 
-    static class CountPIClass implements Runnable {
+    static class RunnablePIClass implements Runnable {
 
         @Override
         public void run() {
@@ -90,7 +93,7 @@ public class GetPI {
         }
     }
 
-    static class GetPIClass implements Callable<Double> {
+    static class CallablePIClass implements Callable<Double> {
 
         @Override
         public Double call() throws Exception {
