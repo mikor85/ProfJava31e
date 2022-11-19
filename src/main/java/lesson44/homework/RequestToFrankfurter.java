@@ -13,15 +13,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class RequestToFrankfurter {
     public static void main(String[] args) {
-        double amount = 100;
-        String convertFrom = "USD";
-        String convertTo = "EUR";
+        double amount = 50;
+        String convertFrom = "EUR";
+        String convertTo = "USD";
 
-        addRateInDB(amount, convertFrom, convertTo);
+        //addRateInDB(amount, convertFrom, convertTo);
         //removeRowRateFromDB(amount);
+
+        addRateFromCompletableFuture(amount, convertFrom, convertTo);
+    }
+
+    public static void addRateFromCompletableFuture(double amount, String convertFrom, String convertTo) {
+        CompletableFuture<Rate> cf =
+                CompletableFuture.supplyAsync(() -> getRate(amount, convertFrom, convertTo));
+        try {
+            double cfAmount = cf.get().amount;
+            String cfConvertFrom = cf.get().base;
+            addRateInDB(cfAmount, cfConvertFrom, convertTo);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void removeRowRateFromDB(double amount) {

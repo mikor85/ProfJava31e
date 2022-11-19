@@ -19,4 +19,22 @@ package lesson44.homework;
 // которые являются палиндромами - т.е., одинаково выглядят при чтении вперед и назад - например, "алла".
 
 public class HW_Main {
+    public static void main(String[] args) {
+
+        // Task Nr.1:
+        AddRemoveSalesManFromDB.addSalesManager(1008, "Ivan", "Moscow", 13);
+
+        //AddRemoveSalesManFromDB.removeSalesManager(1008);
+
+        // Task Nr.2:
+        double amount = 100;
+        String convertFrom = "USD";
+        String convertTo = "EUR";
+        //RequestToFrankfurter.addRateInDB(amount, convertFrom, convertTo);
+        //RequestToFrankfurter.removeRowRateFromDB(amount);
+
+        // Task Nr.3:
+        RequestToFrankfurter.addRateFromCompletableFuture(amount, convertFrom, convertTo);
+
+    }
 }
