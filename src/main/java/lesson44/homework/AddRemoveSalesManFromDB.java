@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// 1. Добавьте нового продавца, потом удалите его.
 public class AddRemoveSalesManFromDB {
     public static void main(String[] args) {
         //addSalesManager(1008, "Ivan", "Moscow", 13);
