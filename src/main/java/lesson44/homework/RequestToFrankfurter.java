@@ -15,14 +15,9 @@ import java.util.concurrent.ExecutionException;
 
 public class RequestToFrankfurter {
     public static void main(String[] args) {
-        double amount = 50;
-        String convertFrom = "EUR";
-        String convertTo = "USD";
 
-        //addRateInDB(amount, convertFrom, convertTo);
-        //removeRowRateFromDB(amount);
+        // Main for run located at HW_Main class
 
-        //addRateCompletableFuture(amount, convertFrom, convertTo);
     }
 
     public static void addRateCompletableFuture(double amount, String convertFrom, String convertTo) {
