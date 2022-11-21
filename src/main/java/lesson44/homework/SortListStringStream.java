@@ -12,7 +12,5 @@ public class SortListStringStream {
                         s -> s,
                         Comparator.comparing(o -> o.substring(1))))
                 .toList();
-
-        //return null;
     }
 }

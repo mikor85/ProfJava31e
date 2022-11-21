@@ -17,10 +17,10 @@ public class HW_Main {
         // Task Nr.2:
         // Создайте новый проект и сохраните в базу данных результаты нескольких вызовов
         // веб-сервиса frankfurter с разными параметрами.
-        double amount = 100;
-        String convertFrom = "USD";
+        double amount = 300;
+        String convertFrom = "GBP";
         String convertTo = "EUR";
-        //RequestToFrankfurter.addRateInDB(amount, convertFrom, convertTo);
+        RequestToFrankfurter.addRateInDB(amount, convertFrom, convertTo);
         //RequestToFrankfurter.removeRowRateFromDB(amount);
 
         //---------------------//
@@ -28,7 +28,7 @@ public class HW_Main {
         // Task Nr.3:
         // Сделайте через CompletableFuture и запрос и сохранение результата в базу данных.
 
-        //RequestToFrankfurter.addRateFromCompletableFuture(amount, convertFrom, convertTo);
+        //RequestToFrankfurter.addRateCompletableFuture(amount, convertFrom, convertTo);
 
         //---------------------//
 

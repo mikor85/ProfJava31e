@@ -7,10 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -25,10 +22,10 @@ public class RequestToFrankfurter {
         //addRateInDB(amount, convertFrom, convertTo);
         //removeRowRateFromDB(amount);
 
-        addRateFromCompletableFuture(amount, convertFrom, convertTo);
+        //addRateCompletableFuture(amount, convertFrom, convertTo);
     }
 
-    public static void addRateFromCompletableFuture(double amount, String convertFrom, String convertTo) {
+    public static void addRateCompletableFuture(double amount, String convertFrom, String convertTo) {
         CompletableFuture<Rate> cf =
                 CompletableFuture.supplyAsync(() -> getRate(amount, convertFrom, convertTo));
         try {
@@ -58,6 +55,7 @@ public class RequestToFrankfurter {
         try (
                 Connection connection = DriverManager.getConnection(url);
                 Statement statement = connection.createStatement();
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into rates values (?, ?, ?, ?, ?);");
         ) {
             statement.execute("create table if not exists rates (amount double not null, " +
                     "base text not null, " +
@@ -65,13 +63,14 @@ public class RequestToFrankfurter {
                     "convertCurrency text not null, " +
                     "convertValue double not null);");
             Rate r = getRate(amount, convertFrom, convertTo);
+
             if (r != null) {
-                statement.execute("insert into rates values (" +
-                        r.amount + ", '" +
-                        r.base + "', '" +
-                        r.date + "', '" +
-                        convertTo + "', " +
-                        r.rates.get(convertTo) + ");");
+                preparedStatement.setDouble(1, r.amount);
+                preparedStatement.setString(2, r.base);
+                preparedStatement.setString(3, r.date);
+                preparedStatement.setString(4, convertTo);
+                preparedStatement.setDouble(5, r.rates.get(convertTo));
+                preparedStatement.execute();
             }
 
         } catch (SQLException e) {
