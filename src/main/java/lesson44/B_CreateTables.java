@@ -11,9 +11,9 @@ public class B_CreateTables {
                 // Statement - запрос - "sql запрос" - sql команда
                 Statement stmt = conn.createStatement();
         ) {
-            stmt.execute("create table if not exists salespeople (snum int primary key not null, sname text not null, city" +
+            stmt.execute("create table if not exists salespeople (snum int primary key not null, sname text not null, city " +
                     "text not null, comm integer not null);");
-            stmt.execute("create table if not exists customers (cnum int primary key not null, cname text not null, city" +
+            stmt.execute("create table if not exists customers (cnum int primary key not null, cname text not null, city " +
                     "text not null, rating integer not null, snum int not null);");
             stmt.execute("create table if not exists orders (onum int primary key not null, amt int not null, odate text" +
                     "not null, cnum int not null, snum int not null);");

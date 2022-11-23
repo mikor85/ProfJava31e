@@ -9,8 +9,7 @@ public class SortListStringStream {
 
         return strings.stream()
                 .sorted(Comparator.comparing(
-                        s -> s,
-                        Comparator.comparing(o -> o.substring(1))))
+                        string -> string.substring(1)))
                 .toList();
     }
 }

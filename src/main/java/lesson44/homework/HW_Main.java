@@ -58,6 +58,12 @@ public class HW_Main {
         // 6. С помощью Stream-ов отфильтруйте список строк, распечатав только те из них,
         // которые являются палиндромами - т.е., одинаково выглядят при чтении вперед и назад - например, "алла".
         List<String> stringList = List.of("Max", "Alla alla", "Лёша на полке клопа нашёл", "Аргентина манит негра");
+        stringList.stream()
+                .filter(GetPalindrome::isPalindrome)
+                .forEach(System.out::println);
+
+        System.out.println("----------");
+
         GetPalindrome.getPalindrome(stringList);
     }
 }

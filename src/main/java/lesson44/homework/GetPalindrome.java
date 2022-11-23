@@ -12,4 +12,8 @@ public class GetPalindrome {
                             .equalsIgnoreCase(sb.toString().replaceAll(" ", ""));
                 }).forEach(System.out::println);
     }
+
+    public static boolean isPalindrome(String s) {
+        return s.equalsIgnoreCase(new StringBuilder(s).reverse().toString());
+    }
 }

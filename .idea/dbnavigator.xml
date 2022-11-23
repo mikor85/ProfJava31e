@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f324c1ce-664c-4325-ab71-4df6c3f66fd3">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from salespeople;]]></console>
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select 'salesname' as Manager from orders where snum in (select sname from salespeople = Max);]]></console>
     </connection>
     <connection id="1216a973-2f72-4a23-b4ab-5d91a3ec1f6d">
       <console name="Frankfurter" type="STANDARD" schema="main" session="Main"><![CDATA[select * from rates;]]></console>
@@ -21,6 +21,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="f324c1ce-664c-4325-ab71-4df6c3f66fd3" dataset="main.customers" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -69,7 +72,7 @@
           <deprecated-pwd value="" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
