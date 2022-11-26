@@ -96,4 +96,22 @@ public class CustomerDao {
         }
         return customersByCityList;
     }
+
+    public List<Customer> getCustomersByRs(ResultSet rs) throws SQLException {
+        SalesDao salesDao = new SalesDao();
+        List<Customer> result = new ArrayList<>();
+        while (rs.next()) {
+            Sales sales = salesDao.getSalesById(rs.getInt("snum"));
+            result.add(
+                    new Customer(
+                            rs.getInt("cnum"),
+                            rs.getString("cname"),
+                            rs.getString("citytext"),
+                            rs.getInt("rating"),
+                            sales
+                    )
+            );
+        }
+        return result;
+    }
 }

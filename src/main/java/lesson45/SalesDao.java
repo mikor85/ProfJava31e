@@ -11,8 +11,11 @@ public class SalesDao {
     private static final String insert = "insert into salespeople values (?, ?, ?, ?);";
     private static final String delete = "delete from salespeople where snum = ?;";
     private static final String selectCity = "select * from salespeople where city = ?;";
+    private static final String selectSales = "select * from salespeople where snum= ?;";
+
     private final Statement selectStatement;
     private final PreparedStatement selectCityPreparedStatement;
+    private final PreparedStatement selectSalesByIdStatement;
     private final PreparedStatement insertStatement;
     private final PreparedStatement deleteStatement;
 
@@ -23,6 +26,7 @@ public class SalesDao {
         insertStatement = conn.prepareStatement(insert);
         deleteStatement = conn.prepareStatement(delete);
         selectStatement = conn.createStatement();
+        selectSalesByIdStatement = conn.prepareStatement(selectSales);
         selectCityPreparedStatement = conn.prepareStatement(selectCity);
         //
     }
@@ -40,6 +44,27 @@ public class SalesDao {
     public void delete(Sales sales) throws SQLException {
         deleteStatement.setInt(1, sales.getId());
         deleteStatement.execute();
+    }
+
+    public Sales getSalesById(int snum) throws SQLException {
+        Sales sales = null;
+        selectCityPreparedStatement.setInt(1, snum);
+        try (
+                ResultSet rs = selectCityPreparedStatement.executeQuery();
+        ) {
+            if (rs.next()) {
+                sales =
+                        new Sales(
+                                rs.getInt("snum"),
+                                rs.getString("sname"),
+                                rs.getString("citytext"),
+                                rs.getInt("comm")
+                        );
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return sales;
     }
 
     public List<Sales> getAll() throws SQLException {

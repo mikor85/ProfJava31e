@@ -1,7 +1,7 @@
 package lesson45;
 
 public class Customer {
-    private int id;       // cnum    - уникальный номер заказчика
+    private Integer id;       // cnum    - уникальный номер заказчика
     private String name;  // cname   - имя
     private String city;  // city    - город
     private int rating;   // raiting - рейтинг
